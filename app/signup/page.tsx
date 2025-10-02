@@ -72,7 +72,7 @@ export default function CreateUserForm() {
   }
 
   return (
-    <div className="container mx-auto absolute min-h-screen  w-full pt-20 flex flex-col items-center space-y-5">
+    <div className="container bg-white dark:bg-neutral-900 mx-auto absolute min-h-screen  w-full pt-20 flex flex-col items-center space-y-5">
       <div>
         <h1 className="text-2xl font-semibold">Create an account with us</h1>
       </div>
