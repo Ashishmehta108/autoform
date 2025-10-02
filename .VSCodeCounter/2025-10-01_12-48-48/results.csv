@@ -1,0 +1,97 @@
+"filename", "language", "TypeScript", "JSON with Comments", "Markdown", "XML", "JavaScript", "JSON", "TypeScript JSX", "PostCSS", "YAML", "comment", "blank", "total"
+"c:\Users\ashis\autoform\README.md", "Markdown", 0, 0, 23, 0, 0, 0, 0, 0, 0, 0, 14, 37
+"c:\Users\ashis\autoform\app\api\auth\[...nextauth]\route.ts", "TypeScript", 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3
+"c:\Users\ashis\autoform\app\api\cloudinary\upload\single\route.ts", "TypeScript", 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 41
+"c:\Users\ashis\autoform\app\api\create-user\route.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\ashis\autoform\app\api\persona\[personaId]\route.ts", "TypeScript", 106, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 117
+"c:\Users\ashis\autoform\app\api\persona\route.ts", "TypeScript", 76, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 85
+"c:\Users\ashis\autoform\app\api\resume\route.ts", "TypeScript", 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 31
+"c:\Users\ashis\autoform\app\api\route.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"c:\Users\ashis\autoform\app\api\upload\single\route.ts", "TypeScript", 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 29
+"c:\Users\ashis\autoform\app\dashboard\analytics\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 74, 0, 0, 0, 8, 82
+"c:\Users\ashis\autoform\app\dashboard\billing\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 455, 0, 0, 33, 25, 513
+"c:\Users\ashis\autoform\app\dashboard\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 20, 0, 0, 1, 3, 24
+"c:\Users\ashis\autoform\app\dashboard\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 272, 0, 0, 8, 15, 295
+"c:\Users\ashis\autoform\app\globals.css", "PostCSS", 0, 0, 0, 0, 0, 0, 0, 117, 0, 7, 18, 142
+"c:\Users\ashis\autoform\app\layout.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 3, 36
+"c:\Users\ashis\autoform\app\login\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 141, 0, 0, 2, 9, 152
+"c:\Users\ashis\autoform\app\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 749, 0, 0, 11, 44, 804
+"c:\Users\ashis\autoform\app\profile\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 4, 45
+"c:\Users\ashis\autoform\app\signup\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 151, 0, 0, 0, 10, 161
+"c:\Users\ashis\autoform\app\test\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 3, 39
+"c:\Users\ashis\autoform\app\test\test2\page.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 45, 0, 0, 15, 8, 68
+"c:\Users\ashis\autoform\auth.config.ts", "TypeScript", 57, 0, 0, 0, 0, 0, 0, 0, 0, 18, 11, 86
+"c:\Users\ashis\autoform\auth.ts", "TypeScript", 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 22
+"c:\Users\ashis\autoform\components.json", "JSON", 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 21
+"c:\Users\ashis\autoform\components\EmptyState\Dashboard\EmptyState.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 28, 0, 0, 0, 2, 30
+"c:\Users\ashis\autoform\components\Loader\loader.css", "PostCSS", 0, 0, 0, 0, 0, 0, 0, 49, 0, 4, 6, 59
+"c:\Users\ashis\autoform\components\Loader\loader.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 12, 0, 0, 1, 2, 15
+"c:\Users\ashis\autoform\components\ModeToggle.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 4, 33
+"c:\Users\ashis\autoform\components\Persona\CreatePersona.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 350, 0, 0, 1, 16, 367
+"c:\Users\ashis\autoform\components\Persona\DeletePersona.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 2, 15
+"c:\Users\ashis\autoform\components\Persona\GetPersonas.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 4, 16
+"c:\Users\ashis\autoform\components\ProfileSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 3, 27
+"c:\Users\ashis\autoform\components\StatsCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 4, 34
+"c:\Users\ashis\autoform\components\Upload.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 126, 0, 0, 0, 10, 136
+"c:\Users\ashis\autoform\components\dashboard\ProfileCard.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 37, 0, 0, 0, 3, 40
+"c:\Users\ashis\autoform\components\dashboard\Sidebar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 197, 0, 0, 5, 11, 213
+"c:\Users\ashis\autoform\components\providers.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 39, 0, 0, 0, 7, 46
+"c:\Users\ashis\autoform\components\sign-in.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 3, 9
+"c:\Users\ashis\autoform\components\skeletons\personas\PersonaSkeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 33, 0, 0, 0, 2, 35
+"c:\Users\ashis\autoform\components\theme-provider.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 3, 12
+"c:\Users\ashis\autoform\components\ui\accordion.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 8, 67
+"c:\Users\ashis\autoform\components\ui\alert.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 60, 0, 0, 0, 7, 67
+"c:\Users\ashis\autoform\components\ui\avatar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 7, 54
+"c:\Users\ashis\autoform\components\ui\badge.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 6, 47
+"c:\Users\ashis\autoform\components\ui\button.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 6, 60
+"c:\Users\ashis\autoform\components\ui\card.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 83, 0, 0, 0, 10, 93
+"c:\Users\ashis\autoform\components\ui\chart.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 315, 0, 0, 2, 37, 354
+"c:\Users\ashis\autoform\components\ui\dialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 130, 0, 0, 0, 14, 144
+"c:\Users\ashis\autoform\components\ui\dropdown-menu.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 239, 0, 0, 0, 19, 258
+"c:\Users\ashis\autoform\components\ui\form.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 143, 0, 0, 0, 25, 168
+"c:\Users\ashis\autoform\components\ui\input.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 4, 22
+"c:\Users\ashis\autoform\components\ui\label.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 5, 25
+"c:\Users\ashis\autoform\components\ui\scroll-area.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 6, 59
+"c:\Users\ashis\autoform\components\ui\select.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 172, 0, 0, 0, 14, 186
+"c:\Users\ashis\autoform\components\ui\separator.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 5, 29
+"c:\Users\ashis\autoform\components\ui\sheet.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 126, 0, 0, 0, 14, 140
+"c:\Users\ashis\autoform\components\ui\sidebar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 660, 0, 0, 12, 55, 727
+"c:\Users\ashis\autoform\components\ui\skeleton.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 3, 14
+"c:\Users\ashis\autoform\components\ui\sonner.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 5, 26
+"c:\Users\ashis\autoform\components\ui\table.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 105, 0, 0, 0, 12, 117
+"c:\Users\ashis\autoform\components\ui\tabs.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 59, 0, 0, 0, 8, 67
+"c:\Users\ashis\autoform\components\ui\textarea.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 4, 19
+"c:\Users\ashis\autoform\components\ui\tooltip.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 8, 62
+"c:\Users\ashis\autoform\drizzle.config.ts", "TypeScript", 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 12
+"c:\Users\ashis\autoform\eslint.config.mjs", "JavaScript", 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 5, 17
+"c:\Users\ashis\autoform\hooks\use-mobile.ts", "TypeScript", 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 20
+"c:\Users\ashis\autoform\lib\actions\create-user.ts", "TypeScript", 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 49
+"c:\Users\ashis\autoform\lib\actions\get-resume.ts", "TypeScript", 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 16
+"c:\Users\ashis\autoform\lib\actions\loginuser.ts", "TypeScript", 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 37
+"c:\Users\ashis\autoform\lib\actions\persona.ts", "TypeScript", 115, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 125
+"c:\Users\ashis\autoform\lib\actions\resume-parse.ts", "TypeScript", 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 45
+"c:\Users\ashis\autoform\lib\api.ts", "TypeScript", 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 10
+"c:\Users\ashis\autoform\lib\cloudinary.ts", "TypeScript", 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 25
+"c:\Users\ashis\autoform\lib\db\db.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 6
+"c:\Users\ashis\autoform\lib\db\schema.ts", "TypeScript", 119, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 129
+"c:\Users\ashis\autoform\lib\types\Dashboard.types.ts", "TypeScript", 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14
+"c:\Users\ashis\autoform\lib\types\persona.types.ts", "TypeScript", 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 41
+"c:\Users\ashis\autoform\lib\types\simple-resume-parser.d.ts", "TypeScript", 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 8
+"c:\Users\ashis\autoform\lib\types\user.types.ts", "TypeScript", 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 16
+"c:\Users\ashis\autoform\lib\utils.ts", "TypeScript", 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 20
+"c:\Users\ashis\autoform\middleware.ts", "TypeScript", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"c:\Users\ashis\autoform\next.config.ts", "TypeScript", 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 8
+"c:\Users\ashis\autoform\package.json", "JSON", 0, 0, 0, 0, 0, 75, 0, 0, 0, 0, 1, 76
+"c:\Users\ashis\autoform\pnpm-lock.yaml", "YAML", 0, 0, 0, 0, 0, 0, 0, 0, 6483, 0, 1677, 8160
+"c:\Users\ashis\autoform\postcss.config.mjs", "JavaScript", 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 2, 6
+"c:\Users\ashis\autoform\public\file.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\ashis\autoform\public\globe.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\ashis\autoform\public\google.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\ashis\autoform\public\next.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\ashis\autoform\public\vercel.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\ashis\autoform\public\window.svg", "XML", 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\ashis\autoform\store\state.ts", "TypeScript", 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 21
+"c:\Users\ashis\autoform\tsconfig.json", "JSON with Comments", 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 1, 28
+"c:\Users\ashis\autoform\utils\cookies.ts", "TypeScript", 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 25
+"c:\Users\ashis\autoform\utils\utils.ts", "TypeScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1
+"Total", "-", 897, 27, 23, 6, 16, 96, 5471, 166, 6483, 121, 2344, 15650
