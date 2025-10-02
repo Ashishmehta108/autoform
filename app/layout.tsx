@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import Providers from "@/components/providers";
+import { SessionProviderWrapper } from "@/components/Sessionproviderwrapper";
 
 const arimo = Arimo({
   subsets: ["latin"],
@@ -25,9 +26,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <SessionProvider>
+          <SessionProviderWrapper>
             <Providers>{children}</Providers>
-          </SessionProvider>
+          </SessionProviderWrapper>
         </ThemeProvider>
       </body>
     </html>

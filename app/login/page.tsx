@@ -48,11 +48,10 @@ export default function CreateUserForm() {
     try {
       setIsSubmitting(true);
 
-      // use uploaded image URL if present
       const uploadedImage = uploadRef.current?.[0]?.uploadedUrl;
       const payload = {
         ...values,
-        image: uploadedImage || values.image, // fallback to manual input
+        image: uploadedImage || values.image,
       };
 
       const resp = await LoginViaEmail(payload);

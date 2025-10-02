@@ -16,7 +16,7 @@ export default function DashboardLayout({
         <AppSidebar />
         <main className="flex-1 dark:bg-neutral-900 w-full overflow-y-auto  bg-white ">
           <div className="flex items-center justify-between sticky dark:bg-neutral-900/90 backdrop-blur-xs z-50 px-4  p-2 top-0">
-            <SidebarTrigger className="md:hidden" />
+            <SidebarTrigger className="md:hidden block" />
             <div></div>
             <ModeToggle  />
           </div>
