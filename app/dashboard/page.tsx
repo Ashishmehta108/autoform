@@ -388,8 +388,8 @@ function Dashboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Card className="border-gray-200 max-w-md">
+      <div className="min-h-screen bg-white  flex items-center justify-center">
+        <Card className="border-neutral-200 max-w-md">
           <CardContent className="text-center py-8">
             <div className="text-red-500 mb-4 text-4xl">⚠️</div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -412,7 +412,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen dark:bg-neutral-900 bg-neutral-50 p-6 transition-colors duration-300">
+    <div className="min-h-screen dark:bg-neutral-900 bg-white p-6 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

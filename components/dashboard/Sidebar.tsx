@@ -70,7 +70,7 @@ export default function AppSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              className={`cursor-pointer ${collapsed ? "" : "ml-auto"}`}
+              className={`cursor-pointer md:block hidden ${collapsed ? "" : "ml-auto"}`}
               onClick={() => setCollapsed(!collapsed)}
             >
               {collapsed ? (
