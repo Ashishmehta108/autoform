@@ -69,7 +69,7 @@ export default function CreateUserForm() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4">
+    <div className="flex items-center bg-white dark:bg-neutral-900 justify-center min-h-screen px-4">
       <Card className="w-full max-w-md shadow-none border-none">
         <CardHeader>
           <CardTitle className="text-2xl font-semibold text-center">
@@ -92,7 +92,7 @@ export default function CreateUserForm() {
               className="flex-1 h-11 gap-2 cursor-pointer"
               onClick={() => signIn("google")}
             >
-              <Google className="fill-neutral-800 w-5 h-5 text-neutral-800" />
+              <Google className="fill-neutral-800 dark:text-neutral-100 dark:fill-neutral-100 w-5 h-5 text-neutral-800" />
               Google
             </Button>
           </div>
