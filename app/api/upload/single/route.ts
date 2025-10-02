@@ -1,33 +1,3 @@
-// import { writeFile, mkdir } from "fs/promises";
-// import path from "path";
-// import { NextResponse } from "next/server";
-
-// export async function POST(req: Request) {
-//   const formData = await req.formData();
-//   const file = formData.get("file") as File;
-
-//   if (!file) {
-//     return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-//   }
-
-//   const bytes = await file.arrayBuffer();
-//   const buffer = Buffer.from(bytes);
-//   const fileName = `${Date.now()}-${file.name}`;
-//   const uploadDir = path.join(process.cwd(), "public", "uploads");
-
-//   try {
-//     await mkdir(uploadDir, { recursive: true });
-//     const filePath = path.join(uploadDir, fileName);
-//     await writeFile(filePath, buffer);
-
-//     return NextResponse.json({ success: true, url: `/uploads/${fileName}` });
-//   } catch (err) {
-//     console.error(err);
-//     return NextResponse.json({ error: "Failed to save file" }, { status: 500 });
-//   }
-// }
-
-// app/api/upload/route.tsimport { writeFile, mkdir, unlink } from "fs/promises";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import path from "path";
 import { NextResponse } from "next/server";
@@ -35,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY! // server key
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
 export async function POST(req: Request) {
