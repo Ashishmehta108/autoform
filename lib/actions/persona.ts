@@ -1,8 +1,10 @@
+"use server";
 import { db } from "../db/db";
-import { persona } from "@/lib/db/schema";
+import { persona, personaReqs } from "@/lib/db/schema";
 import { randomUUID } from "crypto";
 import { and, eq } from "drizzle-orm";
 import { CreatePersonaInput, UpdatePersonaInput } from "../types/persona.types";
+import { v4 as uuid } from "uuid";
 
 export const createPersona = async ({
   personaName,
@@ -12,7 +14,7 @@ export const createPersona = async ({
   personaImage,
   personaDescription,
   personauserdetaildocs,
-  addresses
+  addresses,
 }: CreatePersonaInput) => {
   if (!personaName || !userId) {
     throw new Error("personaId, personaName, and userId are required");
@@ -29,7 +31,7 @@ export const createPersona = async ({
       personaImage,
       personaDescription,
       personauserdetaildocs,
-      addresses
+      addresses,
     });
     return { success: true, result };
   } catch (error) {
@@ -97,6 +99,7 @@ export const getAllPersona = async (userId: string) => {
     return {
       success: false,
       error: error instanceof Error ? error.message : String(error),
+      personas: [],
     };
   }
 };
@@ -122,3 +125,19 @@ export const getSpecificPersona = async (userId: string, personaId: string) => {
     };
   }
 };
+
+export async function createRequest(personaId: string) {
+  try {
+    const requestId = uuid();
+    const [data] = await db.insert(personaReqs).values({
+      requestId,
+      personaId,
+    });
+    if (!data) {
+      throw new Error("could'nt create request try again later");
+    }
+    return requestId;
+  } catch (error) {
+    return error;
+  }
+}

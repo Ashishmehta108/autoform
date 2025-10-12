@@ -1,20 +1,20 @@
 import { create } from "zustand";
 
-type UserState = {
+type User = {
   userId: string;
   email: string;
   image: string;
-  setUser: (userId: string, email: string, image: string) => void;
+};
+type UserState = {
+  user: User;
+
+  setUser: (user: User) => void;
 };
 
 export const useUserStore = create<UserState>((set) => ({
-  userId: "",
-  email: "",
-  image: "",
-  setUser: (userId, email, image) =>
+  user: { userId: "", email: "", image: "" },
+  setUser: (user: User) =>
     set(() => ({
-      userId,
-      email,
-      image,
+      user: user,
     })),
 }));

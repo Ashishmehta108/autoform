@@ -1,4 +1,4 @@
-("use client");
+"use client";
 
 import { ReactNode, useEffect } from "react";
 import { SessionProvider, useSession } from "next-auth/react";
@@ -9,7 +9,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function SessionProviderWrapper({ children }: Props) {
+function AuthGuard({ children }: Props) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
@@ -19,14 +19,20 @@ export function SessionProviderWrapper({ children }: Props) {
 
     if (session && (pathname === "/login" || pathname === "/signup")) {
       router.replace("/dashboard");
-    }
-
-    if (!session && pathname.startsWith("/dashboard")) {
+    } else if (!session && pathname.startsWith("/dashboard")) {
       router.replace("/login");
     }
   }, [session, status, pathname, router]);
 
   if (status === "loading") return <Loader />;
 
-  return <SessionProvider>{children}</SessionProvider>;
+  return <>{children}</>;
+}
+
+export function SessionProviderWrapper({ children }: Props) {
+  return (
+    <SessionProvider>
+      <AuthGuard>{children}</AuthGuard>
+    </SessionProvider>
+  );
 }

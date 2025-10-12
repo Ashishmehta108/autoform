@@ -26,9 +26,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           enableSystem
           disableTransitionOnChange
         >
-          <SessionProviderWrapper>
-            <Providers>{children}</Providers>
-          </SessionProviderWrapper>
+          <SessionProvider refetchOnWindowFocus={false} refetchInterval={0}>
+            <SessionProviderWrapper>
+              <Providers>{children}</Providers>
+            </SessionProviderWrapper>
+          </SessionProvider>
         </ThemeProvider>
       </body>
     </html>

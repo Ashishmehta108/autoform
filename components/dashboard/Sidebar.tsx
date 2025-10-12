@@ -16,13 +16,14 @@ import {
 import { Puzzle, History, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useUserStore } from "@/store/state";
 import {
   Card,
   Chart,
   DocumentText,
   Home3,
+  Key,
   Profile2User,
   SidebarLeft,
   SidebarRight,
@@ -41,8 +42,8 @@ export default function AppSidebar() {
     await signOut({ redirectTo: "/" });
   };
 
-  const user = useUserStore();
-
+  const { data: user } = useSession();
+  // console.log(data);
   return (
     <div
       className={`transition-all hidden md:block   duration-500 ease-in-out ${
@@ -70,7 +71,9 @@ export default function AppSidebar() {
             <Button
               variant="ghost"
               size="icon"
-              className={`cursor-pointer md:block hidden ${collapsed ? "" : "ml-auto"}`}
+              className={`cursor-pointer md:flex hidden ${
+                collapsed ? "" : "ml-auto"
+              }`}
               onClick={() => setCollapsed(!collapsed)}
             >
               {collapsed ? (
@@ -97,6 +100,11 @@ export default function AppSidebar() {
                 href: "/dashboard/integrations",
                 icon: Puzzle,
                 label: "Integrations",
+              },
+              {
+                href: "/dashboard/apis",
+                icon: Key,
+                label: "Api keys",
               },
             ].map(({ href, icon: Icon, label }) => (
               <SidebarMenuItem key={href}>
@@ -189,9 +197,9 @@ export default function AppSidebar() {
               className="flex items-center gap-3 p-2 rounded-md justify-center"
             >
               <Avatar className="w-8 h-8">
-                <AvatarImage src={user.image} alt="@user" />
+                <AvatarImage src={user?.user?.image!} alt="@user" />
                 <AvatarFallback>
-                  <div>{user?.email[0]?.toUpperCase()}</div>
+                  <div>{user?.user?.email![0]?.toUpperCase()}</div>
                 </AvatarFallback>
               </Avatar>
               <div
@@ -201,9 +209,11 @@ export default function AppSidebar() {
                     : "opacity-100 translate-x-0"
                 }`}
               >
-                <span className="text-sm font-medium">Ashish Dev</span>
+                <span className="text-sm font-medium">
+                  {user?.user?.name || user?.user?.email?.split("@")[0]}
+                </span>
                 <span className="block text-xs text-neutral-500 dark:text-neutral-400">
-                  {user.email}
+                  {user?.user?.email}
                 </span>
               </div>
             </Link>

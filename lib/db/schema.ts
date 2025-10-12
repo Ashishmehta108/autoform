@@ -98,12 +98,11 @@ export const userApikeys = pgTable("apikey", {
   id: text("id").primaryKey(),
   userId: text("userId")
     .notNull()
-    .unique()
     .references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow().notNull(),
   expiresAt: timestamp("expiresAt", { mode: "date" }),
   revoked: boolean("revoked").default(false).notNull(),
-  dailyLimit: integer("dailyLimit").default(3).notNull(), // e.g., 3 for free, 500 for pro
+  dailyLimit: integer("dailyLimit").default(3).notNull(),
   dailyUsageCount: integer("dailyUsageCount").default(0).notNull(),
   usageResetAt: timestamp("usageResetAt", { mode: "date" }),
 });
@@ -125,4 +124,16 @@ export const formFilledLogs = pgTable("formfilledlogs", {
   personaIdUsed: text("personaIdUsed").references(() => persona.personaId, {
     onDelete: "cascade",
   }),
+});
+
+export const personaReqs = pgTable("personaRequest", {
+  requestId: text("requestId").primaryKey(),
+  personaId: text("personaIdReqs")
+    .notNull()
+    .references(() => persona.personaId, { onDelete: "cascade" }),
+});
+
+export const updationTickets = pgTable("updationTickets", {
+  ticketId: text("ticketId").primaryKey(),
+  ticketType: text("tickettype").default("updationofbody"),
 });

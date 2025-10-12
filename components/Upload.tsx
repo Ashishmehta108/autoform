@@ -22,7 +22,7 @@ export function DocumentUploader({
   isSubmitting,
   accept = false,
 }: {
-  filesRef: React.MutableRefObject<UploadedFile[]>;
+  filesRef: React.RefObject<UploadedFile[]>;
   isSubmitting: boolean;
   accept?: boolean;
 }) {
@@ -56,6 +56,7 @@ export function DocumentUploader({
               file,
               preview: URL.createObjectURL(file),
               uploadedUrl: result.url,
+              fileName: result.fileName,
             },
           ]);
         } catch (err) {
@@ -96,7 +97,6 @@ export function DocumentUploader({
     <>
       <Card className="p-4 space-y-4">
         <Label className="text-base">Upload Documents</Label>
-
         <motion.div
           {...getRootProps()}
           className={`border border-dashed border-neutral-300 dark:border-neutral-700 p-6 rounded-md text-center cursor-pointer transition-colors ${

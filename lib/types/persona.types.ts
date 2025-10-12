@@ -1,7 +1,6 @@
 import { Address } from "./user.types";
 
 export type CreatePersonaInput = {
-  personaId: string;
   personaName: string;
   userId: string;
   username?: string;
@@ -26,17 +25,18 @@ export interface UploadedFile {
   file: File;
   preview: string;
   uploadedUrl?: string;
+  fileName: string;
 }
 
-export type Persona = {
+export interface Persona {
   personaId: string;
   personaName: string;
-  userId: string;
-  username?: string;
-  personaEmail?: string;
-  personaImage?: string;
-  personaDescription: string;
-  personauserdetaildocs?: string;
-  personauserdetailsummary: string;
-  addresses: Address[];
-};
+  userId: string | null;
+  username: string | null;
+  personaEmail: string | null;
+  personaImage: string | null;
+  personaDescription: string | null;
+  personauserdetaildocs: string | null;
+  personauserdetailsummary: string | null;
+  addresses: Address[] | null;
+}

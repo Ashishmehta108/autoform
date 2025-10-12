@@ -6,10 +6,11 @@ export type User = {
   refreshToken: string;
 };
 
-export type Address = {
-  type: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-};
+export interface Address {
+  type: "Permanent" | "Temporary";
+  street?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  country?: string;
+}

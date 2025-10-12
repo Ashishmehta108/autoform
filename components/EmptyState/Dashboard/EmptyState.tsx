@@ -1,4 +1,4 @@
-import { useDashboardStore } from "@/app/dashboard/page";
+import { useDashboardStore } from "@/components/dashboard/DashboardClient";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, User } from "lucide-react";

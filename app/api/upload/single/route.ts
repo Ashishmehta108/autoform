@@ -28,7 +28,6 @@ export async function POST(req: Request) {
     filePath = path.join(uploadDir, fileName);
     await writeFile(filePath, buffer);
 
-    // Upload to Supabase
     const { error: uploadError } = await supabase.storage
       .from("uploads")
       .upload(fileName, buffer, { contentType: file.type, upsert: true });
@@ -47,7 +46,11 @@ export async function POST(req: Request) {
       .from("uploads")
       .getPublicUrl(fileName);
 
-    return NextResponse.json({ success: true, url: publicUrlData.publicUrl });
+    return NextResponse.json({
+      success: true,
+      url: publicUrlData.publicUrl,
+      fileName: fileName,
+    });
   } catch (err) {
     console.error("Upload failed:", err);
 

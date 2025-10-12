@@ -16,11 +16,11 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       session?.user &&
       !location.href.startsWith("dashboard")
     ) {
-      setUser(
-        session.user.id || "",
-        session.user.email || "",
-        session.user.image || ""
-      );
+      setUser({
+        userId: session.user.id || "",
+        email: session.user.email || "",
+        image: session.user.image || "",
+      });
     }
   }, [session, status]);
 
@@ -33,7 +33,13 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Loader from "./Loader/loader";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (

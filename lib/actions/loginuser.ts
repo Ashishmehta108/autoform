@@ -8,7 +8,7 @@ import z from "zod";
 
 const LoginUserViaEmailSchema = z.object({
   email: z.email(),
-  image: z.string().optional().nullable(),
+
   password: z.string(),
 });
 
@@ -20,7 +20,7 @@ export async function LoginViaEmail(
     throw new Error("Invalid input");
   }
 
-  const { password, email, image } = parsed.data;
+  const { password, email } = parsed.data;
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const existing = await db

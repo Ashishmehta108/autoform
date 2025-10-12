@@ -30,7 +30,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-20 px-4 bg-neutral-900">
+    <section className="py-20 px-4 bg-white dark:bg-neutral-900">
       <div className="container max-w-7xl mx-auto">
         <FadeInSection delay={1}>
           <div className="text-center mb-16">

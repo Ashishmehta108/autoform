@@ -42,7 +42,7 @@ const plansData = [
 
 export function PricingSection() {
   return (
-    <section className="py-20 px-4 bg-neutral-900 border-t border-b border-zinc-200 dark:border-zinc-800">
+    <section className="py-20 px-4 bg-white dark:bg-neutral-900 border-t border-b border-zinc-200 dark:border-zinc-800">
       <div className="container mx-auto max-w-7xl flex flex-col items-center">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold text-zinc-900 dark:text-zinc-100">

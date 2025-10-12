@@ -21,14 +21,33 @@ import {
 } from "@/components/ui/select";
 
 import { Loader } from "lucide-react";
-import { useDashboardStore } from "@/app/dashboard/page";
+import { useDashboardStore } from "../dashboard/DashboardClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { DocumentUploader } from "../Upload";
 import { CreatePersonaInput, UploadedFile } from "@/lib/types/persona.types";
-import { uuidv4 } from "zod";
 import { toast } from "sonner";
 import { ParseDescription } from "@/lib/utils";
+
+interface Address {
+  type: "Permanent" | "Temporary";
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+interface FormData {
+  personaName: string;
+  personaEmail: string;
+  personaDescription: string;
+  role: string;
+  experience: string;
+  personauserdetaildocs: string;
+  addresses: Address[];
+}
+
+// ------------------ API ------------------
 
 const createPersona = async (data: CreatePersonaInput) => {
   const res = await fetch("/api/persona", {
@@ -47,43 +66,56 @@ export default function CreatePersonaModal() {
   const queryClient = useQueryClient();
   const { data: session } = useSession();
 
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = React.useState<FormData>({
     personaName: "",
     personaEmail: "",
     personaDescription: "",
     role: "",
     experience: "",
     personauserdetaildocs: "",
-    addresses: [{ type: "", street: "", city: "", state: "", zip: "" }],
+    addresses: [
+      { type: "Temporary", street: "", city: "", state: "", zip: "" },
+    ],
   });
+
+  const resetForm = () =>
+    setFormData({
+      personaName: "",
+      personaEmail: "",
+      personaDescription: "",
+      role: "",
+      experience: "",
+      personauserdetaildocs: "",
+      addresses: [
+        { type: "Temporary", street: "", city: "", state: "", zip: "" },
+      ],
+    });
 
   const createPersonaMutation = useMutation({
     mutationFn: createPersona,
     onSuccess: (newPersona: CreatePersonaInput) => {
-      queryClient.setQueryData(
+      queryClient.setQueryData<CreatePersonaInput[]>(
         ["personas"],
-        (old: CreatePersonaInput[] = []) => [...old, newPersona]
+        (old = []) => [...old, newPersona]
       );
       setCreateModalOpen(false);
-      setFormData({
-        personaName: "",
-        personaEmail: "",
-        personaDescription: "",
-        role: "",
-        experience: "",
-        personauserdetaildocs: "",
-        addresses: [{ type: "", street: "", city: "", state: "", zip: "" }],
-      });
+      resetForm();
     },
   });
 
   const documentRef = useRef<UploadedFile[]>([]);
 
-  const handleChange = (field: keyof typeof formData, value: string) => {
+  const handleChange = <K extends keyof FormData>(
+    field: K,
+    value: FormData[K]
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleChangeAddresstype = (index: number, val: string) => {
+  const handleChangeAddresstype = (
+    index: number,
+    val: "Temporary" | "Permanent"
+  ) => {
     setFormData((prev) => {
       const updatedAddresses = [...prev.addresses];
       updatedAddresses[index].type = val;
@@ -93,19 +125,24 @@ export default function CreatePersonaModal() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!session?.user?.id) {
+      toast.error("You must be logged in to create a persona");
+      return;
+    }
+
     const description = ParseDescription(
       formData.role,
       formData.experience,
       formData.personaDescription
     );
+
     const payload: CreatePersonaInput = {
-      personaId: String(uuidv4()),
       personaName: formData.personaName,
       personaEmail: formData.personaEmail,
       personaDescription: description,
-      userId: session?.user?.id!,
-      username: session?.user?.name || "",
-      personauserdetaildocs: formData.personauserdetaildocs || "",
+      userId: session.user.id,
+      username: session.user.name || "",
+      personauserdetaildocs: documentRef.current[0].fileName,
       addresses: formData.addresses,
     };
     createPersonaMutation.mutate(payload);
@@ -156,8 +193,13 @@ export default function CreatePersonaModal() {
                   className="space-y-3 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 p-4"
                 >
                   <Select
-                    value={formData.addresses[index].type}
-                    onValueChange={(val) => handleChangeAddresstype(index, val)}
+                    value={address.type}
+                    onValueChange={(val) =>
+                      handleChangeAddresstype(
+                        index,
+                        val as "Temporary" | "Permanent"
+                      )
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select address type" />
@@ -172,26 +214,27 @@ export default function CreatePersonaModal() {
                   </Select>
 
                   <div className="grid grid-cols-2 gap-4">
-                    {["street", "city", "state", "zip"].map((field) => (
-                      <div key={field} className="space-y-2">
-                        <Label htmlFor={`${field}-${index}`}>
-                          {field.charAt(0).toUpperCase() + field.slice(1)}
-                        </Label>
-                        <Input
-                          id={`${field}-${index}`}
-                          value={address[field as keyof typeof address]}
-                          onChange={(e) => {
-                            const updated = [...formData.addresses];
-                            updated[index][field as keyof typeof address] =
-                              e.target.value;
-                            setFormData({ ...formData, addresses: updated });
-                          }}
-                          placeholder={
-                            field === "zip" ? "10001" : `Enter ${field}`
-                          }
-                        />
-                      </div>
-                    ))}
+                    {(["street", "city", "state", "zip"] as const).map(
+                      (field) => (
+                        <div key={field} className="space-y-2">
+                          <Label htmlFor={`${field}-${index}`}>
+                            {field.charAt(0).toUpperCase() + field.slice(1)}
+                          </Label>
+                          <Input
+                            id={`${field}-${index}`}
+                            value={address[field]}
+                            onChange={(e) => {
+                              const updated = [...formData.addresses];
+                              updated[index][field] = e.target.value;
+                              setFormData({ ...formData, addresses: updated });
+                            }}
+                            placeholder={
+                              field === "zip" ? "10001" : `Enter ${field}`
+                            }
+                          />
+                        </div>
+                      )
+                    )}
                   </div>
 
                   {formData.addresses.length > 1 && (
@@ -224,7 +267,13 @@ export default function CreatePersonaModal() {
                     ...formData,
                     addresses: [
                       ...formData.addresses,
-                      { type: "", street: "", city: "", state: "", zip: "" },
+                      {
+                        type: "Temporary",
+                        street: "",
+                        city: "",
+                        state: "",
+                        zip: "",
+                      },
                     ],
                   })
                 }
