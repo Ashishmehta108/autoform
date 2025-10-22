@@ -4,21 +4,49 @@ export type CreatePersonaInput = {
   personaName: string;
   userId: string;
   username?: string;
-  personaEmail?: string;
+  phoneNumber?: string;
   personaImage?: string;
-  personaDescription?: string;
-  personauserdetaildocs?: string;
-  addresses: Address[];
+  description?: string;
+  summary?: string;
+
+  addresses?: Address[];
+  education?: {
+    degree: string;
+    institution?: string;
+    graduationYear?: string;
+    fieldOfStudy?: string;
+  }[];
+  workExperience?: {
+    company?: string;
+    position: string;
+    startDate?: string;
+    endDate?: string;
+    highlights?: string[];
+  }[];
+  projects?: {
+    name: string;
+    description?: string;
+    technologies?: string[];
+    link?: string;
+  }[];
+
+  skills?: string[];
+  interests?: string[];
+  hobbies?: string[];
+  languages?: string[];
+
+  gender?: "Male" | "Female" | "Other" | "Prefer not to say";
+  nationality?: string;
+
+  socialProfiles?: {
+    platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
+    handle?: string;
+    url?: string;
+  }[];
 };
 
-export type UpdatePersonaInput = {
+export type UpdatePersonaInput = Partial<CreatePersonaInput> & {
   personaId: string;
-  personaName?: string;
-  username?: string;
-  personaEmail?: string;
-  personaImage?: string;
-  personaDescription?: string;
-  personauserdetaildocs?: string;
 };
 
 export interface UploadedFile {
@@ -31,12 +59,56 @@ export interface UploadedFile {
 export interface Persona {
   personaId: string;
   personaName: string;
-  userId: string | null;
-  username: string | null;
-  personaEmail: string | null;
-  personaImage: string | null;
-  personaDescription: string | null;
-  personauserdetaildocs: string | null;
-  personauserdetailsummary: string | null;
-  addresses: Address[] | null;
+  userId: string;
+  username?: string | null;
+  phoneNumber?: string | null;
+  personaImage?: string | null;
+  description?: string | null;
+  summary?: string | null;
+
+  addresses?: Address[] | null;
+  education?:
+    | {
+        degree: string;
+        institution?: string;
+        graduationYear?: string;
+        fieldOfStudy?: string;
+      }[]
+    | null;
+  workExperience?:
+    | {
+        company?: string;
+        position: string;
+        startDate?: string;
+        endDate?: string;
+        highlights?: string[];
+      }[]
+    | null;
+  projects?:
+    | {
+        name: string;
+        description?: string;
+        technologies?: string[];
+        link?: string;
+      }[]
+    | null;
+
+  skills?: string[] | null;
+  interests?: string[] | null;
+  hobbies?: string[] | null;
+  languages?: string[] | null;
+
+  gender?: "Male" | "Female" | "Other" | "Prefer not to say" | null;
+  nationality?: string | null;
+
+  socialProfiles?:
+    | {
+        platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
+        handle?: string;
+        url?: string;
+      }[]
+    | null;
+
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }

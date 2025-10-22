@@ -386,19 +386,28 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
 
 type DashboardClientProps = {
   session: any;
-  initialPersonas: any[];
-  fetchError?: boolean;
 };
 
-export default function DashboardClient({
-  session,
-  initialPersonas,
-  fetchError,
-}: DashboardClientProps) {
+export default function DashboardClient({ session }: DashboardClientProps) {
   const { setCreateModalOpen, formsFilledThisMonth, successRate } =
     useDashboardStore();
   const [userId] = useState(session.user.id);
-
+  const testWebhook = async () => {
+    const test = await fetch(process.env.NEXT_PUBLIC_WEBHOOK_URL! , {
+      method: "POST",
+      // body: JSON.stringify({
+      //   personaId: "test-persona-id",
+      //   requestId: "test-request-id",
+      //   document: {
+      //     storagePath: "testuser",
+      //     storageFolder: "new",
+      //   },
+      // }),
+    });
+    const data = await test.json();
+    console.log(data);
+    toast(data.message);
+  };
   const {
     data: personas = [],
     isLoading,
@@ -409,28 +418,23 @@ export default function DashboardClient({
     queryFn: async () => {
       const res = await fetch(`/api/persona?userId=${userId}`);
       const data = await res.json();
-
       if (!res.ok || !data.success) {
         throw new Error(data?.message || "Failed to fetch personas");
       }
 
-      toast.success("Personas fetched successfully");
+      toast.success("Personas   fetched successfully");
       return data.personas;
     },
-    initialData: initialPersonas,
+
     enabled: !!userId,
     staleTime: 5 * 60 * 1000,
   });
-
-  if (fetchError) {
-    toast.error("Error loading personas from server");
-  }
 
   return (
     <div className="min-h-screen dark:bg-neutral-900 bg-white p-6 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="mb-8 flex  md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100 mb-2">
               Dashboard
@@ -441,16 +445,17 @@ export default function DashboardClient({
           </div>
 
           <Button
-            className="bg-rose-600 hover:bg-rose-700 text-white"
+            className="bg-blue-800 cursor-pointer hover:bg-blue-700 text-white"
             onClick={() => setCreateModalOpen(true)}
           >
             <Plus className="w-4 h-4 mr-2" />
             Create Persona
           </Button>
         </div>
+        <div onClick={testWebhook}>Test webhook</div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 container mx-auto max-w-6xl">
           <StatsCard
             title="Total Personas"
             value={personas.length}

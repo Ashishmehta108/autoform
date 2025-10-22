@@ -4,15 +4,14 @@ import {
   createPersona,
   createRequest,
 } from "@/lib/actions/persona";
-import { v4 as uuid } from "uuid";
 import { db } from "@/lib/db/db";
 import { persona, updationTickets } from "@/lib/db/schema";
+import { createPersonaSchema } from "@/lib/actions/validations";
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
-
     if (!userId) {
       return NextResponse.json(
         {
@@ -21,12 +20,10 @@ export async function GET(req: Request) {
           details: "The query string must contain ?userId=<id>",
           status: 400,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
-
     const result = await getAllPersona(userId);
-
     if (!result.success) {
       return NextResponse.json(
         {
@@ -35,7 +32,7 @@ export async function GET(req: Request) {
           details: result.error,
           status: 401,
         },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -51,7 +48,7 @@ export async function GET(req: Request) {
         details: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -59,8 +56,19 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const personaId = uuid();
     const result = await createPersona(body);
+    const parsed = createPersonaSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Validation failed",
+          details: parsed.error.cause,
+          status: 400,
+        },
+        { status: 400 },
+      );
+    }
     if (!result.success) {
       return NextResponse.json(
         {
@@ -69,12 +77,16 @@ export async function POST(req: Request) {
           details: result.error,
           status: 500,
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
-    const requestId = await createRequest(personaId);
+    const personaId = result.personaId;
+    const requestId = await createRequest(result.personaId!);
     await fetch(process.env.WEBHOOK_URL!, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         personaId,
         requestId,
@@ -84,7 +96,6 @@ export async function POST(req: Request) {
         },
       }),
     });
-
     return NextResponse.json({
       success: true,
       personaId: personaId,
@@ -97,7 +108,7 @@ export async function POST(req: Request) {
         details: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -130,7 +141,7 @@ export async function PUT(req: NextRequest) {
       },
       {
         status: 200,
-      }
+      },
     );
   } catch (error: any) {
     return NextResponse.json(
@@ -140,7 +151,7 @@ export async function PUT(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

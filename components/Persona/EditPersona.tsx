@@ -114,7 +114,7 @@ export function EditPersonaModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-3xl bg-white dark:bg-neutral-900 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Edit Persona</DialogTitle>
         </DialogHeader>
@@ -124,7 +124,7 @@ export function EditPersonaModal({
           <button
             className={`px-4 py-2 ${
               activeTab === "general"
-                ? "border-b-2 border-blue-500 text-blue-600 font-semibold"
+                ? "border-b-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 font-semibold"
                 : "text-neutral-500 dark:text-neutral-400"
             }`}
             onClick={() => setActiveTab("general")}
@@ -134,7 +134,7 @@ export function EditPersonaModal({
           <button
             className={`px-4 py-2 ${
               activeTab === "addresses"
-                ? "border-b-2 border-blue-500 text-blue-600 font-semibold"
+                ? "border-b-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 font-semibold"
                 : "text-neutral-500 dark:text-neutral-400"
             }`}
             onClick={() => setActiveTab("addresses")}
@@ -143,7 +143,6 @@ export function EditPersonaModal({
           </button>
         </div>
 
-        {/* General Tab */}
         {activeTab === "general" && (
           <div className="space-y-4">
             <div>
@@ -243,7 +242,7 @@ export function EditPersonaModal({
                     size="sm"
                     onClick={() => handleRemoveAddress(idx)}
                   >
-                    Remove Address
+                    Remove A ddress
                   </Button>
                 )}
               </div>

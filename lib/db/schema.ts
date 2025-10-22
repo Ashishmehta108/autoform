@@ -41,7 +41,7 @@ export const accounts = pgTable(
     id_token: text("id_token"),
     session_state: text("session_state"),
   },
-  (account) => [primaryKey(account.provider, account.providerAccountId)]
+  (account) => [primaryKey(account.provider, account.providerAccountId)],
 );
 
 export const sessions = pgTable("session", {
@@ -59,7 +59,7 @@ export const verificationTokens = pgTable(
     token: text("token").notNull(),
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
-  (vt) => [primaryKey(vt.identifier, vt.token)]
+  (vt) => [primaryKey(vt.identifier, vt.token)],
 );
 
 export const authenticators = pgTable(
@@ -78,20 +78,66 @@ export const authenticators = pgTable(
   },
   (authenticator) => [
     primaryKey(authenticator.userId, authenticator.credentialID),
-  ]
+  ],
 );
 
 export const persona = pgTable("persona", {
   personaId: text("personaId").primaryKey(),
   personaName: text("personaName").notNull(),
-  userId: text("id").references(() => users.id, { onDelete: "cascade" }),
-  username: text("name"),
-  personaEmail: text("email"),
-  personaImage: text("image"),
-  personaDescription: text("personadescription"),
-  personauserdetaildocs: text("docs"),
-  personauserdetailsummary: text("summary"),
+
+  userId: text("userId")
+    .references(() => users.id, { onDelete: "cascade" })
+    .notNull(),
+
+  username: text("username"),
+  phoneNumber: text("phoneNumber"),
+  personaImage: text("personaImage"),
+  description: text("description"),
+  summary: text("summary"),
+
   addresses: json("addresses").$type<Address[]>(),
+  education: json("education").$type<
+    {
+      degree: string;
+      institution?: string;
+      graduationYear?: string;
+      fieldOfStudy?: string;
+    }[]
+  >(),
+  workExperience: json("workExperience").$type<
+    {
+      company?: string;
+      position: string;
+      startDate?: string;
+      endDate?: string;
+      highlights?: string[];
+    }[]
+  >(),
+  projects: json("projects").$type<
+    {
+      name: string;
+      description?: string;
+      technologies?: string[];
+      link?: string;
+    }[]
+  >(),
+  skills: json("skills").$type<string[]>(),
+  interests: json("interests").$type<string[]>(),
+  hobbies: json("hobbies").$type<string[]>(),
+  languages: json("languages").$type<string[]>(),
+
+  gender: text("gender"),
+  nationality: text("nationality"),
+
+  socialProfiles: json("socialProfiles").$type<
+    {
+      platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
+      handle?: string;
+      url?: string;
+    }[]
+  >(),
+  createdAt: timestamp("createdAt").defaultNow(),
+  updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
 export const userApikeys = pgTable("apikey", {

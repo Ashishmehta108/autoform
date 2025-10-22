@@ -135,6 +135,7 @@ export default function CreatePersonaModal() {
       formData.experience,
       formData.personaDescription
     );
+    console.log("Parsed Description:", documentRef.current);
 
     const payload: CreatePersonaInput = {
       personaName: formData.personaName,
@@ -142,7 +143,8 @@ export default function CreatePersonaModal() {
       personaDescription: description,
       userId: session.user.id,
       username: session.user.name || "",
-      personauserdetaildocs: documentRef.current[0].fileName,
+
+      personauserdetaildocs: documentRef.current[0].fileName ||"",
       addresses: formData.addresses,
     };
     createPersonaMutation.mutate(payload);

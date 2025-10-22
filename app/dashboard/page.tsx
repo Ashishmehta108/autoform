@@ -1,11 +1,11 @@
-import { auth } from "@/auth";
+"use client";
 import DashboardClient from "@/components/dashboard/DashboardClient";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { getAllPersona } from "@/lib/actions/persona";
-import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-export default async function Dashboard() {
-  const session = await auth();
+export default function Dashboard() {
+  const { data: session } =  useSession();
 
   if (!session) {
     return (
@@ -19,12 +19,5 @@ export default async function Dashboard() {
       </div>
     );
   }
-  const { success, personas } = await getAllPersona(session?.user?.id!);
-  return (
-    <DashboardClient
-      session={session}
-      fetchError={success === false}
-      initialPersonas={personas}
-    />
-  );
+  return <DashboardClient session={session} />;
 }

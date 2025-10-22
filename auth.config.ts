@@ -66,27 +66,6 @@ export default {
       }
       return session;
     },
-
-    // async signIn({ user, account }) {
-    //   if (account?.provider === "github") {
-    //     const existingUser = await db
-    //       .select()
-    //       .from(users)
-    //       .where(eq(users.email, user.email!))
-    //       .limit(1);
-
-    //     if (existingUser.length === 0) {
-    //       await db.insert(users).values({
-    //         id: account.providerAccountId, // GitHub ID
-    //         name: user.name,
-    //         email: user.email!,
-    //         image: user.image,
-    //       });
-    //     }
-    //   }
-
-    //   return true;
-    // },
   },
   pages: {
     signIn: "/login",

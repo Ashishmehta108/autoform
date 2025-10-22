@@ -15,13 +15,13 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 w-full z-50 border-b bg-background/80 backdrop-blur-md">
-      <div className="container flex h-16 items-center justify-between px-4">
+    <header className="fixed top-0 w-full z-50 border-b bg-white/80  dark:bg-neutral-900/80 backdrop-blur-md">
+      <div className="container mx-auto max-w-7xl flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-rose-500 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-blue-800 rounded-lg flex items-center justify-center">
             <FileCheck className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-semibold text-rose-500">AutoForm</span>
+          <span className="text-xl font-semibold ">AutoForm</span>
         </Link>
 
         <nav className="hidden md:flex gap-6 items-center text-sm font-medium">
@@ -41,7 +41,7 @@ export const Navbar = () => {
           <Link href={"/dashboard"}>
             <Button
               size="sm"
-              className="bg-rose-500 hover:bg-rose-600 text-white hidden md:block cursor-pointer"
+              className="bg-blue-800 hover:bg-blue-700 text-white hidden md:block cursor-pointer"
             >
               Get Started
             </Button>

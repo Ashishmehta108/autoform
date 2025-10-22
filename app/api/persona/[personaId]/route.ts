@@ -4,6 +4,7 @@ import {
   updatePersona,
   deletePersona,
 } from "@/lib/actions/persona";
+import { updatePersonaSchema } from "@/lib/actions/validations";
 
 type tparams = Promise<{ personaId: string }>;
 
@@ -12,7 +13,6 @@ export async function GET(req: Request, { params }: { params: tparams }) {
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
     const personaId = (await params).personaId;
-    console.log(personaId, userId);
     if (!userId || !personaId)
       return NextResponse.json(
         {
@@ -22,7 +22,7 @@ export async function GET(req: Request, { params }: { params: tparams }) {
             "Both userId (query param) and personaId (route param) are required.",
           status: 400,
         },
-        { status: 400 }
+        { status: 400 },
       );
 
     const result = await getSpecificPersona(userId, personaId);
@@ -34,7 +34,7 @@ export async function GET(req: Request, { params }: { params: tparams }) {
           details: result.error,
           status: 404,
         },
-        { status: 404 }
+        { status: 404 },
       );
 
     return NextResponse.json({
@@ -49,7 +49,7 @@ export async function GET(req: Request, { params }: { params: tparams }) {
         details: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -58,7 +58,18 @@ export async function PUT(req: Request, { params }: { params: tparams }) {
   try {
     const body = await req.json();
     const personaId = (await params).personaId;
-
+    const parsed = updatePersonaSchema.safeParse({ personaId, ...body });
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Validation failed",
+          details: parsed.error.issues,
+          status: 400,
+        },
+        { status: 400 },
+      );
+    }
     const result = await updatePersona({ personaId, ...body });
     if (!result.success)
       return NextResponse.json(
@@ -68,7 +79,7 @@ export async function PUT(req: Request, { params }: { params: tparams }) {
           details: result.error,
           status: 500,
         },
-        { status: 500 }
+        { status: 500 },
       );
 
     return NextResponse.json({ success: true });
@@ -80,17 +91,27 @@ export async function PUT(req: Request, { params }: { params: tparams }) {
         details: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 export async function DELETE(req: Request, { params }: { params: tparams }) {
   try {
-    ``;
     const personaId = (await params).personaId;
     const { userId } = await req.json();
-    console.log("personaid", personaId, "userid", userId);
+    if (!userId || !personaId) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Missing userId or personaId",
+          details:
+            "Both userId (query param) and personaId (route param) are required.",
+          status: 400,
+        },
+        { status: 400 },
+      );
+    }
     const result = await deletePersona(personaId, userId);
 
     if (!result.success)
@@ -101,7 +122,7 @@ export async function DELETE(req: Request, { params }: { params: tparams }) {
           details: result.error,
           status: 500,
         },
-        { status: 500 }
+        { status: 500 },
       );
 
     return NextResponse.json({ success: true, data: result });
@@ -113,7 +134,7 @@ export async function DELETE(req: Request, { params }: { params: tparams }) {
         details: error instanceof Error ? error.message : String(error),
         status: 500,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
