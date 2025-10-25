@@ -29,7 +29,7 @@ const uploadFilesToCloudinary = async (files: File[]) => {
 };
 
 export const CloudinaryUploader = React.forwardRef<
-  UploadedFile[], // 👈 type of the ref
+  UploadedFile[],
   {
     isSubmitting: boolean;
     accept?: boolean;

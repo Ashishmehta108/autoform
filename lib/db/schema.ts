@@ -88,6 +88,7 @@ export const persona = pgTable("persona", {
   userId: text("userId")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
+  email: text("email"),
 
   username: text("username"),
   phoneNumber: text("phoneNumber"),

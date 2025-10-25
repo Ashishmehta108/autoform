@@ -366,8 +366,6 @@ import { PersonaSkeleton } from "@/components/skeletons/personas/PersonaSkeleton
 import { EmptyState } from "@/components/EmptyState/Dashboard/EmptyState";
 import PersonaCard from "@/app/test/test2/page";
 import CreatePersonaModal from "@/components/Persona/CreatePersona";
-
-import { getAllPersona } from "@/lib/actions/persona";
 import { DashboardStore } from "@/lib/types/Dashboard.types";
 import { create } from "zustand";
 import { Persona } from "@/lib/types/persona.types";
@@ -392,26 +390,9 @@ export default function DashboardClient({ session }: DashboardClientProps) {
   const { setCreateModalOpen, formsFilledThisMonth, successRate } =
     useDashboardStore();
   const [userId] = useState(session.user.id);
-  const testWebhook = async () => {
-    const test = await fetch(process.env.NEXT_PUBLIC_WEBHOOK_URL! , {
-      method: "POST",
-      // body: JSON.stringify({
-      //   personaId: "test-persona-id",
-      //   requestId: "test-request-id",
-      //   document: {
-      //     storagePath: "testuser",
-      //     storageFolder: "new",
-      //   },
-      // }),
-    });
-    const data = await test.json();
-    console.log(data);
-    toast(data.message);
-  };
   const {
     data: personas = [],
     isLoading,
-    error,
     refetch,
   } = useQuery({
     queryKey: ["personas", userId],
@@ -452,7 +433,6 @@ export default function DashboardClient({ session }: DashboardClientProps) {
             Create Persona
           </Button>
         </div>
-        <div onClick={testWebhook}>Test webhook</div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 container mx-auto max-w-6xl">
@@ -510,7 +490,6 @@ export default function DashboardClient({ session }: DashboardClientProps) {
             </div>
           )}
         </div>
-
         <CreatePersonaModal />
       </div>
     </div>

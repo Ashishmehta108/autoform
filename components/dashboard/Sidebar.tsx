@@ -17,7 +17,6 @@ import { Puzzle, History, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "next-auth/react";
-import { useUserStore } from "@/store/state";
 import {
   Card,
   Chart,
@@ -52,7 +51,7 @@ export default function AppSidebar() {
     >
       <Sidebar
         variant="sidebar"
-        className={`bg-white w-16 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 
+        className={`bg-white w-16 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100
         border-r border-neutral-200 dark:border-neutral-800
         transition-all duration-500 ease-in-out overflow-hidden
         ${collapsed ? "w-16 items-center justify-center" : "w-64"}`}
@@ -150,7 +149,7 @@ export default function AppSidebar() {
                     collapsed ? "justify-center" : "justify-start"
                   }`}
                 >
-                  <History className="w-6 h-6" strokeWidth={1.5} />
+                  <History className="w-6 h-6 " strokeWidth={1.5} />
                   <span
                     className={`transition-all duration-300 ease-in-out transform ${
                       collapsed

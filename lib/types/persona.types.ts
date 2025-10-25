@@ -8,7 +8,7 @@ export type CreatePersonaInput = {
   personaImage?: string;
   description?: string;
   summary?: string;
-
+  email: string;
   addresses?: Address[];
   education?: {
     degree: string;
@@ -37,7 +37,7 @@ export type CreatePersonaInput = {
 
   gender?: "Male" | "Female" | "Other" | "Prefer not to say";
   nationality?: string;
-
+  document?: string;
   socialProfiles?: {
     platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
     handle?: string;
