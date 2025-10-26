@@ -9,7 +9,7 @@ import {
   json,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "@auth/core/adapters";
-import { Address } from "../types/user.types";
+import { Address } from "../types/persona.types";
 
 export const users = pgTable("user", {
   id: text("id").primaryKey(),
@@ -88,14 +88,14 @@ export const persona = pgTable("persona", {
   userId: text("userId")
     .references(() => users.id, { onDelete: "cascade" })
     .notNull(),
-  email: text("email"),
+  personaEmail: text("email"),
 
   username: text("username"),
   phoneNumber: text("phoneNumber"),
   personaImage: text("personaImage"),
-  description: text("description"),
+  personaDescription: text("description"),
   summary: text("summary"),
-
+  document: text("document"),
   addresses: json("addresses").$type<Address[]>(),
   education: json("education").$type<
     {

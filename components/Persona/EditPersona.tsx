@@ -47,7 +47,7 @@ export function EditPersonaModal({
   });
 
   const [activeTab, setActiveTab] = useState<"general" | "addresses">(
-    "general"
+    "general",
   );
   const [loading, setLoading] = useState(false);
 
@@ -118,8 +118,6 @@ export function EditPersonaModal({
         <DialogHeader>
           <DialogTitle>Edit Persona</DialogTitle>
         </DialogHeader>
-
-        {/* Tabs */}
         <div className="flex space-x-2 border-b border-neutral-300 dark:border-neutral-700 mb-4">
           <button
             className={`px-4 py-2 ${
@@ -196,8 +194,6 @@ export function EditPersonaModal({
             </div>
           </div>
         )}
-
-        {/* Addresses Tab */}
         {activeTab === "addresses" && (
           <div className="space-y-4">
             {formData.addresses.map((addr, idx) => (

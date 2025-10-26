@@ -418,77 +418,20 @@ import { useDashboardStore } from "../dashboard/DashboardClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { DocumentUploader } from "../Upload";
-import { CreatePersonaInput, UploadedFile } from "@/lib/types/persona.types";
+import {
+  CreatePersonaInput,
+  Education,
+  FormData,
+  Project,
+  SocialProfile,
+  UploadedFile,
+  WorkExperience,
+} from "@/lib/types/persona.types";
 import { toast } from "sonner";
 import { ParseDescription } from "@/lib/utils";
+import InputWithLabelElement from "../ui-abstract/InputWithLabelElement";
+import { SimpleArrayField } from "../ui-abstract/SimpleArray";
 
-/**
- * NOTE:
- * - Skills / interests / hobbies / languages are simple comma-separated fields (easy to parse server-side).
- * - Education / Work / Projects / SocialProfiles support multiple entries (add/remove).
- * - Kept styling consistent with your ShadCN UI usage.
- */
-
-/* ----------------------------- Local Types ------------------------------ */
-type AddrType = "Permanent" | "Temporary";
-
-interface Address {
-  type: AddrType;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-}
-
-interface Education {
-  degree: string;
-  institution?: string;
-  graduationYear?: string;
-  fieldOfStudy?: string;
-}
-
-interface WorkExperience {
-  company?: string;
-  position: string;
-  startDate?: string;
-  endDate?: string;
-  highlights?: string; // newline or comma separated text
-}
-
-interface Project {
-  name: string;
-  description?: string;
-  technologies?: string; // comma-separated
-  link?: string;
-}
-
-interface SocialProfile {
-  platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
-  handle?: string;
-  url?: string;
-}
-
-interface FormData {
-  personaName: string;
-  personaEmail: string;
-  personaDescription: string;
-  role: string;
-  experience: string;
-  personauserdetaildocs: string;
-  addresses: Address[];
-  education: Education[];
-  workExperience: WorkExperience[];
-  projects: Project[];
-  skills: string; // comma-separated
-  interests: string; // comma-separated
-  hobbies: string; // comma-separated
-  languages: string; // comma-separated
-  gender?: "Male" | "Female" | "Other" | "Prefer not to say";
-  nationality?: string;
-  socialProfiles: SocialProfile[];
-}
-
-/* ------------------------- API helper (create) -------------------------- */
 const createPersona = async (data: CreatePersonaInput) => {
   const res = await fetch("/api/persona", {
     method: "POST",
@@ -506,7 +449,6 @@ const createPersona = async (data: CreatePersonaInput) => {
   return res.json();
 };
 
-/* ---------------------------- Main component ---------------------------- */
 export default function CreatePersonaModal() {
   const { isCreateModalOpen, setCreateModalOpen } = useDashboardStore();
   const queryClient = useQueryClient();
@@ -585,12 +527,10 @@ export default function CreatePersonaModal() {
       setCreateModalOpen(false);
       resetForm();
     },
-    onError: (err: any) => {
+    onError: (err: unknown) => {
       toast.error(err?.message || "Failed to create persona");
     },
   });
-
-  /* ----------------------------- Handlers -------------------------------- */
 
   const setField = useCallback(
     <K extends keyof FormData>(field: K, value: FormData[K]) => {
@@ -734,30 +674,6 @@ export default function CreatePersonaModal() {
     },
     [formData, session, mutation],
   );
-
-  const SimpleArrayField: React.FC<{
-    label: string;
-    value: string;
-    onChange: (v: string) => void;
-    placeholder?: string;
-    helper?: string;
-  }> = React.memo(({ label, value, onChange, placeholder, helper }) => (
-    <div className="space-y-2">
-      <Label>{label}</Label>
-      <Input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-      />
-      {helper && (
-        <p className="text-xs text-neutral-500 dark:text-neutral-400">
-          {helper}
-        </p>
-      )}
-    </div>
-  ));
-  SimpleArrayField.displayName = "SimpleArrayField";
-
   const roleOptions = useMemo(
     () => [
       "Software Engineer",
@@ -771,7 +687,6 @@ export default function CreatePersonaModal() {
     ],
     [],
   );
-
   const experienceOptions = useMemo(
     () => ["0-1 years", "2-3 years", "4-5 years", "6-8 years", "9+ years"],
     [],
@@ -792,18 +707,35 @@ export default function CreatePersonaModal() {
 
           <form onSubmit={handleSubmit} className="space-y-6 pt-2">
             <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
+              {/*<div className="space-y-2">
                 <Label htmlFor="personaName">Persona Name</Label>
                 <Input
                   id="personaName"
+                  type="text"
                   value={formData.personaName}
                   onChange={(e) => setField("personaName", e.target.value)}
                   required
+                  className="placeholdee:text-neutral-100"
                   placeholder="John Doe"
                 />
-              </div>
-
-              <div className="space-y-2">
+              </div>*/}
+              <InputWithLabelElement
+                labelFor="personaName"
+                lableText="Persona Name"
+                inputType="text"
+                inputValue={formData.personaEmail}
+                setField={setField}
+                inputId="personaEmail"
+              />
+              <InputWithLabelElement
+                labelFor="personaEmail"
+                lableText="Email"
+                inputType="email"
+                inputValue={formData.personaEmail}
+                setField={setField}
+                inputId="personaEmail"
+              />
+              {/*<div className="space-y-2">
                 <Label htmlFor="personaEmail">Email</Label>
                 <Input
                   id="personaEmail"
@@ -813,10 +745,9 @@ export default function CreatePersonaModal() {
                   required
                   placeholder="john@example.com"
                 />
-              </div>
+              </div>*/}
             </div>
 
-            {/* ----- Role / Experience / Gender / Nationality ----- */}
             <div className="grid grid-cols-4 gap-4">
               <div className="space-y-2 col-span-2">
                 <Label>Role</Label>
@@ -903,7 +834,6 @@ export default function CreatePersonaModal() {
               </div>
             </div>
 
-            {/* ----- Addresses ----- */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>Addresses</Label>

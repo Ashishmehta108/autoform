@@ -5,7 +5,7 @@ import { persona } from "../db/schema";
 export const UserResume = async (userId: string, personaId: string) => {
   const resumePath = await db
     .select({
-      resumepath: persona.personauserdetaildocs,
+      resumepath: persona.document,
     })
     .from(persona)
     .where(and(eq(persona.personaId, personaId), eq(persona.userId, userId)));
