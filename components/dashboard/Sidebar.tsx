@@ -196,7 +196,7 @@ export default function AppSidebar() {
               className="flex items-center gap-3 p-2 rounded-md justify-center"
             >
               <Avatar className="w-8 h-8">
-                <AvatarImage src={user?.user?.image!} alt="@user" />
+                <AvatarImage src={user?.user?.image ?? ""} alt="@user" />
                 <AvatarFallback>
                   <div>{user?.user?.email![0]?.toUpperCase()}</div>
                 </AvatarFallback>
@@ -219,7 +219,7 @@ export default function AppSidebar() {
             <Button
               variant="default"
               size="sm"
-              className="w-full justify-center  cursor-pointer mt-2"
+              className="w-full justify-center text-neutral-100 dark:text-neutral-900 bg-neutral-900 dark:bg-neutral-200  cursor-pointer mt-2"
               onClick={handleLogout}
             >
               <LogOut className="w-10 h-10" />

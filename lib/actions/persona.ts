@@ -33,7 +33,6 @@ export const createPersona = async ({
 
   try {
     const personaId = uuid();
-
     const [result] = await db
       .insert(persona)
       .values({
@@ -59,7 +58,6 @@ export const createPersona = async ({
         personaEmail,
       })
       .returning();
-
     console.log("✅ Persona created with ID:", personaId);
     return { success: true, result, personaId };
   } catch (error) {

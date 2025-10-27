@@ -39,6 +39,7 @@ import InputWithLabelElement from "../ui-abstract/InputWithLabelElement";
 import { SimpleArrayField } from "../ui-abstract/SimpleArray";
 
 const createPersona = async (data: CreatePersonaInput) => {
+  console.log(data);
   const res = await fetch("/api/persona", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -91,6 +92,7 @@ export default function CreatePersonaModal() {
     setFormData({
       personaName: "",
       personaEmail: "",
+      personaPhone: "",
       personaDescription: "",
       role: "",
       experience: "",
@@ -970,14 +972,15 @@ export default function CreatePersonaModal() {
                 onClick={() => {
                   setCreateModalOpen(false);
                 }}
-                className="flex-1"
+                className="flex-1 cursor-pointer"
                 disabled={mutation.isPending}
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="flex-1"
+                variant={"default"}
+                className="flex-1 text-white dark:text-neutral-900 bg-neutral-900 dark:bg-neutral-100 dark:hover:bg-neutral-200 cursor-pointer"
                 disabled={
                   mutation.isPending ||
                   !formData.personaName ||

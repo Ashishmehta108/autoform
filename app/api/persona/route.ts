@@ -56,7 +56,6 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const result = await createPersona(body);
     const parsed = createPersonaSchema.safeParse(body);
     if (!parsed.success) {
       return NextResponse.json(
@@ -69,6 +68,8 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
+    const result = await createPersona(body);
+
     if (!result.success) {
       return NextResponse.json(
         {
@@ -81,21 +82,23 @@ export async function POST(req: Request) {
       );
     }
     const personaId = result.personaId;
-    const requestId = await createRequest(result.personaId!);
-    await fetch(process.env.WEBHOOK_URL!, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        personaId,
-        requestId,
-        document: {
-          storagePath: process.env.SUPABASE_STORAGE_PATH,
-          storageFolder: body.personauserdetaildocs,
+    if (parsed.data.document) {
+      const requestId = await createRequest(result.personaId!);
+      await fetch(process.env.WEBHOOK_URL!, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      }),
-    });
+        body: JSON.stringify({
+          personaId,
+          requestId,
+          document: {
+            storagePath: process.env.SUPABASE_STORAGE_PATH,
+            storageFolder: body.personauserdetaildocs,
+          },
+        }),
+      });
+    }
     return NextResponse.json({
       success: true,
       personaId: personaId,

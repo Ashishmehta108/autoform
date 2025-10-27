@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -9,13 +8,13 @@ import { Plus, User, Briefcase, BarChart3, RefreshCcw } from "lucide-react";
 import { StatsCard } from "@/components/StatsCard";
 import { PersonaSkeleton } from "@/components/skeletons/personas/PersonaSkeleton";
 import { EmptyState } from "@/components/EmptyState/Dashboard/EmptyState";
-import PersonaCard from "@/app/test/test2/page";
 import CreatePersonaModal from "@/components/Persona/CreatePersona";
 import { DashboardStore } from "@/lib/types/Dashboard.types";
 import { create } from "zustand";
 import { Persona } from "@/lib/types/persona.types";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
+import PersonaCard from "../Persona/PersonaCard";
 export const useDashboardStore = create<DashboardStore>((set) => ({
   selectedPersona: null,
   isCreateModalOpen: false,
@@ -29,15 +28,10 @@ export const useDashboardStore = create<DashboardStore>((set) => ({
     set((state) => ({ formsFilledThisMonth: state.formsFilledThisMonth + 1 })),
 }));
 
-type DashboardClientProps = {
-  session: Session;
-};
-
-export default function DashboardClient({ session }: DashboardClientProps) {
+export default function DashboardClient() {
   const { setCreateModalOpen, formsFilledThisMonth, successRate } =
     useDashboardStore();
   const userId = useSession().data?.user?.id;
-  // const [userId] = useState(session?.user?.id);
   const {
     data: personas = [],
     isLoading,
@@ -124,10 +118,12 @@ export default function DashboardClient({ session }: DashboardClientProps) {
           ) : personas.length === 0 ? (
             <EmptyState />
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
-              {personas.map((persona: Persona) => (
-                <PersonaCard key={persona.personaId} persona={persona} />
-              ))}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 place-items-center w-full max-w-9xl">
+                {personas.map((persona: Persona) => (
+                  <PersonaCard key={persona.personaId} persona={persona} />
+                ))}
+              </div>
             </div>
           )}
         </div>
