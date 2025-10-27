@@ -14,7 +14,7 @@ const createUserViaEmailSchema = z.object({
 });
 
 export async function createUserViaEmailAction(
-  data: z.infer<typeof createUserViaEmailSchema>
+  data: z.infer<typeof createUserViaEmailSchema>,
 ) {
   const parsed = createUserViaEmailSchema.safeParse(data);
   if (!parsed.success) {
@@ -45,5 +45,4 @@ export async function createUserViaEmailAction(
     image,
     password: hashedPassword,
   });
-  // await signin
 }

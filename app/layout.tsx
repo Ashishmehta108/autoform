@@ -1,13 +1,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Arimo } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import { ReactNode } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider";
 import Providers from "@/components/providers";
 import { SessionProviderWrapper } from "@/components/Sessionproviderwrapper";
 
-const arimo = Arimo({
+const inter = Inter_Tight({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${arimo.className} antialiased`}>
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -11,8 +11,9 @@ export const createPersona = async ({
   userId,
   username,
   phoneNumber,
+  personaEmail,
   personaImage,
-  description,
+  personaDescription,
   summary,
   addresses,
   education,
@@ -32,17 +33,16 @@ export const createPersona = async ({
 
   try {
     const personaId = uuid();
-
     const [result] = await db
       .insert(persona)
       .values({
+        personaDescription,
         personaId,
         personaName,
         userId,
         username,
         phoneNumber,
         personaImage,
-        description,
         summary,
         addresses,
         education,
@@ -55,9 +55,9 @@ export const createPersona = async ({
         gender,
         nationality,
         socialProfiles,
+        personaEmail,
       })
       .returning();
-
     console.log("✅ Persona created with ID:", personaId);
     return { success: true, result, personaId };
   } catch (error) {

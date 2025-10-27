@@ -13,15 +13,13 @@ const LoginUserViaEmailSchema = z.object({
 });
 
 export async function LoginViaEmail(
-  data: z.infer<typeof LoginUserViaEmailSchema>
+  data: z.infer<typeof LoginUserViaEmailSchema>,
 ) {
   const parsed = LoginUserViaEmailSchema.safeParse(data);
   if (!parsed.success) {
     throw new Error("Invalid input");
   }
-
   const { password, email } = parsed.data;
-
   const hashedPassword = await bcrypt.hash(password, 10);
   const existing = await db
     .select()
@@ -31,6 +29,6 @@ export async function LoginViaEmail(
   const signin = await signIn("credentials", {
     password: password,
     email: email,
-    redirectTo: "/profile",
+    redirectTo: "/dashboard",
   });
 }

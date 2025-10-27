@@ -16,7 +16,6 @@ function AuthGuard({ children }: Props) {
 
   useEffect(() => {
     if (status === "loading") return;
-
     if (session && (pathname === "/login" || pathname === "/signup")) {
       router.replace("/dashboard");
     } else if (!session && pathname.startsWith("/dashboard")) {
@@ -24,7 +23,12 @@ function AuthGuard({ children }: Props) {
     }
   }, [session, status, pathname, router]);
 
-  if (status === "loading") return <Loader />;
+  if (status === "loading")
+    return (
+      <div className="h-screen bg-neutral-100 dark:bg-neutral-900  flex item-center justify-center">
+        <Loader />
+      </div>
+    );
 
   return <>{children}</>;
 }

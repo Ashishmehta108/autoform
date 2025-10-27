@@ -1,13 +1,12 @@
-import { Address } from "./user.types";
-
 export type CreatePersonaInput = {
   personaName: string;
   userId: string;
   username?: string;
   phoneNumber?: string;
   personaImage?: string;
-  description?: string;
+  personaDescription?: string;
   summary?: string;
+  personaEmail: string;
 
   addresses?: Address[];
   education?: {
@@ -37,7 +36,7 @@ export type CreatePersonaInput = {
 
   gender?: "Male" | "Female" | "Other" | "Prefer not to say";
   nationality?: string;
-
+  document?: string;
   socialProfiles?: {
     platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
     handle?: string;
@@ -56,6 +55,8 @@ export interface UploadedFile {
   fileName: string;
 }
 
+export type AddrType = "Permanent" | "Temporary";
+
 export interface Persona {
   personaId: string;
   personaName: string;
@@ -63,10 +64,11 @@ export interface Persona {
   username?: string | null;
   phoneNumber?: string | null;
   personaImage?: string | null;
-  description?: string | null;
+  personaDescription?: string | null;
   summary?: string | null;
-
+  personaEmail: string;
   addresses?: Address[] | null;
+  document?: string;
   education?:
     | {
         degree: string;
@@ -111,4 +113,61 @@ export interface Persona {
 
   createdAt?: string | null;
   updatedAt?: string | null;
+}
+
+export interface Address {
+  type: AddrType;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}
+
+export interface Education {
+  degree: string;
+  institution?: string;
+  graduationYear?: string;
+  fieldOfStudy?: string;
+}
+
+export interface WorkExperience {
+  company?: string;
+  position: string;
+  startDate?: string;
+  endDate?: string;
+  highlights?: string;
+}
+
+export interface Project {
+  name: string;
+  description?: string;
+  technologies?: string;
+  link?: string;
+}
+
+export interface SocialProfile {
+  platform: "LinkedIn" | "GitHub" | "Twitter" | "Portfolio" | "Other";
+  handle?: string;
+  url?: string;
+}
+
+export interface FormData {
+  personaName: string;
+  personaEmail: string;
+  personaDescription: string;
+  role: string;
+  personaPhone: string;
+  experience: string;
+  personauserdetaildocs: string;
+  addresses: Address[];
+  education: Education[];
+  workExperience: WorkExperience[];
+  projects: Project[];
+  skills: string;
+  interests: string;
+  hobbies: string;
+  languages: string;
+  gender?: "Male" | "Female" | "Other" | "Prefer not to say";
+  nationality?: string;
+  socialProfiles: SocialProfile[];
 }

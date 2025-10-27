@@ -1,11 +1,10 @@
 "use client";
 import DashboardClient from "@/components/dashboard/DashboardClient";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
-import { getAllPersona } from "@/lib/actions/persona";
 import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
-  const { data: session } =  useSession();
+  const { data: session } = useSession();
 
   if (!session) {
     return (

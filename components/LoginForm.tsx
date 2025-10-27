@@ -20,13 +20,13 @@ import { signIn } from "next-auth/react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { Google } from "iconsax-reactjs";
-import { useRef, useState } from "react";
-import { UploadedFile } from "@/lib/types/persona.types";
-import { CloudinaryUploader } from "@/components/CloudinaryUploader";
+import { useState } from "react";
 import Link from "next/link";
 
 const formViaEmailSchema = z.object({
-  email: z.string().email(),
+  email: z.string().regex(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, {
+    message: "Email is invalid",
+  }),
   password: z.string(),
 });
 
@@ -41,17 +41,14 @@ export default function LoginForm() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const uploadRef = useRef<UploadedFile[]>([]);
 
   async function onSubmit(values: z.infer<typeof formViaEmailSchema>) {
     try {
       setIsSubmitting(true);
-
+      form.reset();
       const resp = await LoginViaEmail(values);
       console.log(resp);
-
       toast("User created successfully!");
-      form.reset();
     } catch (err) {
       console.error(err);
       toast("Failed to create user.");

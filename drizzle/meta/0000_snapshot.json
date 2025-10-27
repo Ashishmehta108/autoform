@@ -1,5 +1,5 @@
 {
-  "id": "1428c723-8666-43b1-bca8-594398043ca1",
+  "id": "186ea526-e7c0-4a68-ac42-003b62691dba",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -322,38 +322,32 @@
           "primaryKey": false,
           "notNull": true
         },
-        "id": {
-          "name": "id",
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "username": {
+          "name": "username",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "name": {
-          "name": "name",
+        "phoneNumber": {
+          "name": "phoneNumber",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "email": {
-          "name": "email",
+        "personaImage": {
+          "name": "personaImage",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "image": {
-          "name": "image",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "personadescription": {
-          "name": "personadescription",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "docs": {
-          "name": "docs",
+        "description": {
+          "name": "description",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -369,16 +363,90 @@
           "type": "json",
           "primaryKey": false,
           "notNull": false
+        },
+        "education": {
+          "name": "education",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "workExperience": {
+          "name": "workExperience",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "projects": {
+          "name": "projects",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "skills": {
+          "name": "skills",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "interests": {
+          "name": "interests",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hobbies": {
+          "name": "hobbies",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "languages": {
+          "name": "languages",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nationality": {
+          "name": "nationality",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "socialProfiles": {
+          "name": "socialProfiles",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "persona_id_user_id_fk": {
-          "name": "persona_id_user_id_fk",
+        "persona_userId_user_id_fk": {
+          "name": "persona_userId_user_id_fk",
           "tableFrom": "persona",
           "tableTo": "user",
           "columnsFrom": [
-            "id"
+            "userId"
           ],
           "columnsTo": [
             "id"

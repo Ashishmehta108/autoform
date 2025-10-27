@@ -1,6 +1,6 @@
 # AutoForm - AI-Powered Form Filling Assistant
 
-## 🚀 Project Overview
+## Project Overview
 AutoForm is an intelligent form filling assistant that helps users automatically fill out online forms using AI-powered personas. The application allows users to create multiple personas with different personal and professional details, then seamlessly populate web forms with a single click.
 
 ### Key Features
@@ -35,7 +35,7 @@ AutoForm is an intelligent form filling assistant that helps users automatically
 - **Styling**: PostCSS
 - **Build Tool**: Turbopack
 
-## 🎨 UI/UX Overview
+##  UI/UX Overview
 AutoForm features a clean, modern interface with a focus on usability:
 
 ### Key Components
@@ -51,7 +51,7 @@ AutoForm features a clean, modern interface with a focus on usability:
 - **Responsive Layout**: Works on all device sizes
 - **Accessibility**: Built with WCAG standards in mind
 
-## 🔐 Authentication & User Flow
+##  Authentication & User Flow
 
 ### Authentication Methods
 - Email/Password
@@ -79,7 +79,7 @@ AutoForm features a clean, modern interface with a focus on usability:
    - Track success rates
    - Manage personas
 
-## 🌐 API & Server Actions
+##  API & Server Actions
 
 ### Authentication
 - `POST /api/auth/signin` - User login
@@ -98,7 +98,7 @@ AutoForm features a clean, modern interface with a focus on usability:
 - `POST /api/fill` - Process form filling request
 - `GET /api/history` - Get form filling history
 
-## 📝 CRUD Operations
+##  CRUD Operations
 
 ### Personas
 - **Create**: Add new personas with custom details
@@ -112,7 +112,7 @@ AutoForm features a clean, modern interface with a focus on usability:
 - **Update**: Modify submission status
 - **Delete**: Remove submission records
 
-## 📱 Pages & Dashboard
+##  Pages & Dashboard
 
 ### Main Pages
 - **/** - Landing page with features and pricing
@@ -130,7 +130,7 @@ AutoForm features a clean, modern interface with a focus on usability:
 - **Analytics**: Track success rates and usage
 - **Settings**: Configure application preferences
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Prerequisites
 - Node.js 18+
@@ -187,11 +187,14 @@ CLOUDINARY_API_SECRET=""
    ```
 
 
-## 🤝 Contributing
+##  Contributing
 Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
 
-## 💬 Support
-For support, please open an issue in the GitHub repository or contact support@autoform.com
+##  Support
+For support, please open an issue in the GitHub repository or contact ashishmehtawork108@gmail.com
+
+The env vars are in the ` .env.example `
+
 ```
 DATABASE_URL="postgresql://user:password@localhost:5432/autoform"
 NEXTAUTH_SECRET="your-secret-key"
@@ -219,7 +222,7 @@ NEXTAUTH_URL="http://localhost:3000"
    ```
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## 🚀 Deployment
+## Deployment
 ### Vercel (Recommended)
 1. Push your code to a GitHub/GitLab/Bitbucket repository
 2. Import the repository on Vercel
@@ -227,9 +230,9 @@ NEXTAUTH_URL="http://localhost:3000"
 4. Deploy!
 
 
-## 🤝 Contributing
+##  Contributing
 Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 
-## 📧 Contact
-For questions or support, please contact [your-email@example.com](mailto:your-email@example.com)
+##  Contact
+For questions or support, please contact [ashishmehtawork108@gmail.com](mailto:ashishmehtawork108@gmail.com)
