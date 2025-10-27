@@ -3,10 +3,9 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
-  console.log(req);
-  const token = await getToken({ req, secret: process.env. });
-  console.log(token );
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   const url = req.nextUrl.clone();
+  console.log(token);
 
   if (url.pathname.startsWith("/dashboard") && !token) {
     url.pathname = "/login";
