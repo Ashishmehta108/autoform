@@ -25,7 +25,9 @@ import Link from "next/link";
 import { toast } from "sonner";
 
 const formViaEmailSchema = z.object({
-  email: z.string().email(),
+  email: z.string().regex(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, {
+    message: "Email is invalid",
+  }),
   image: z.string().optional().nullable(),
   password: z.string(),
 });

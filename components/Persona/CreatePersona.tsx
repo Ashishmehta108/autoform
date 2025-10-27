@@ -1,397 +1,3 @@
-// "use client";
-// import React, { useRef } from "react";
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogDescription,
-//   DialogHeader,
-//   DialogTitle,
-// } from "@/components/ui/dialog";
-// import { ScrollArea } from "@/components/ui/scroll-area";
-// import { Label } from "@/components/ui/label";
-// import { Input } from "@/components/ui/input";
-// import { Textarea } from "@/components/ui/textarea";
-// import { Button } from "@/components/ui/button";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-
-// import { Loader } from "lucide-react";
-// import { useDashboardStore } from "../dashboard/DashboardClient";
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
-// import { useSession } from "next-auth/react";
-// import { DocumentUploader } from "../Upload";
-// import { CreatePersonaInput, UploadedFile } from "@/lib/types/persona.types";
-// import { toast } from "sonner";
-// import { ParseDescription } from "@/lib/utils";
-
-// interface Address {
-//   type: "Permanent" | "Temporary";
-//   street: string;
-//   city: string;
-//   state: string;
-//   zip: string;
-// }
-
-// interface FormData {
-//   personaName: string;
-//   personaEmail: string;
-//   personaDescription: string;
-//   role: string;
-//   experience: string;
-//   personauserdetaildocs: string;
-//   addresses: Address[];
-// }
-
-// const createPersona = async (data: CreatePersonaInput) => {
-//   const res = await fetch("/api/persona", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(data),
-//   });
-
-//   if (!res.ok) throw new Error("Failed to create persona");
-//   toast.success("Created persona successfully");
-//   return res.json();
-// };
-
-// export default function CreatePersonaModal() {
-//   const { isCreateModalOpen, setCreateModalOpen } = useDashboardStore();
-//   const queryClient = useQueryClient();
-//   const { data: session } = useSession();
-
-//   const [formData, setFormData] = React.useState<FormData>({
-//     personaName: "",
-//     personaEmail: "",
-//     personaDescription: "",
-//     role: "",
-//     experience: "",
-//     personauserdetaildocs: "",
-//     addresses: [
-//       { type: "Temporary", street: "", city: "", state: "", zip: "" },
-//     ],
-//   });
-
-//   const resetForm = () =>
-//     setFormData({
-//       personaName: "",
-//       personaEmail: "",
-//       personaDescription: "",
-//       role: "",
-//       experience: "",
-//       personauserdetaildocs: "",
-//       addresses: [
-//         { type: "Temporary", street: "", city: "", state: "", zip: "" },
-//       ],
-//     });
-
-//   const createPersonaMutation = useMutation({
-//     mutationFn: createPersona,
-//     onSuccess: (newPersona: CreatePersonaInput) => {
-//       queryClient.setQueryData<CreatePersonaInput[]>(
-//         ["personas"],
-//         (old = []) => [...old, newPersona],
-//       );
-//       setCreateModalOpen(false);
-//       resetForm();
-//     },
-//   });
-
-//   const documentRef = useRef<UploadedFile[]>([]);
-
-//   const handleChange = <K extends keyof FormData>(
-//     field: K,
-//     value: FormData[K],
-//   ) => {
-//     setFormData((prev) => ({ ...prev, [field]: value }));
-//   };
-
-//   const handleChangeAddresstype = (
-//     index: number,
-//     val: "Temporary" | "Permanent",
-//   ) => {
-//     setFormData((prev) => {
-//       const updatedAddresses = [...prev.addresses];
-//       updatedAddresses[index].type = val;
-//       return { ...prev, addresses: updatedAddresses };
-//     });
-//   };
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!session?.user?.id) {
-//       toast.error("You must be logged in to create a persona");
-//       return;
-//     }
-
-//     const description = ParseDescription(
-//       formData.role,
-//       formData.experience,
-//       formData.personaDescription,
-//     );
-//     console.log("Parsed Description:", documentRef.current);
-
-//     const payload: CreatePersonaInput = {
-//       personaName: formData.personaName,
-//       email: formData.personaEmail,
-//       description: description,
-//       userId: session.user.id,
-//       username: session.user.name || "",
-//       document: documentRef.current[0].fileName || "",
-//       addresses: formData.addresses,
-//     };
-//     createPersonaMutation.mutate(payload);
-//   };
-
-//   return (
-//     <Dialog open={isCreateModalOpen} onOpenChange={setCreateModalOpen}>
-//       <ScrollArea className="max-h-[90vh] overflow-y-auto scrollbar-thin">
-//         <DialogContent className="sm:max-w-md rounded-2xl border border-neutral-200 dark:border-neutral-700 shadow-lg bg-white dark:bg-neutral-900">
-//           <DialogHeader>
-//             <DialogTitle className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
-//               Create New Persona
-//             </DialogTitle>
-//             <DialogDescription className="text-sm text-neutral-600 dark:text-neutral-400">
-//               Generate an AI persona for automated form filling.
-//             </DialogDescription>
-//           </DialogHeader>
-
-//           <form onSubmit={handleSubmit} className="space-y-6 pt-2">
-//             <div className="space-y-2">
-//               <Label htmlFor="personaName">Persona Name</Label>
-//               <Input
-//                 id="personaName"
-//                 value={formData.personaName}
-//                 onChange={(e) => handleChange("personaName", e.target.value)}
-//                 required
-//                 placeholder="John Doe"
-//               />
-//             </div>
-
-//             <div className="space-y-2">
-//               <Label htmlFor="personaEmail">Email</Label>
-//               <Input
-//                 id="personaEmail"
-//                 type="email"
-//                 value={formData.personaEmail}
-//                 onChange={(e) => handleChange("personaEmail", e.target.value)}
-//                 required
-//                 placeholder="john@example.com"
-//               />
-//             </div>
-
-//             <div className="space-y-3">
-//               <Label>Addresses</Label>
-//               {formData.addresses.map((address, index) => (
-//                 <div
-//                   key={index}
-//                   className="space-y-3 rounded-lg border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 p-4"
-//                 >
-//                   <Select
-//                     value={address.type}
-//                     onValueChange={(val) =>
-//                       handleChangeAddresstype(
-//                         index,
-//                         val as "Temporary" | "Permanent",
-//                       )
-//                     }
-//                   >
-//                     <SelectTrigger>
-//                       <SelectValue placeholder="Select address type" />
-//                     </SelectTrigger>
-//                     <SelectContent>
-//                       {["Permanent", "Temporary"].map((r) => (
-//                         <SelectItem key={r} value={r}>
-//                           {r}
-//                         </SelectItem>
-//                       ))}
-//                     </SelectContent>
-//                   </Select>
-
-//                   <div className="grid grid-cols-2 gap-4">
-//                     {(["street", "city", "state", "zip"] as const).map(
-//                       (field) => (
-//                         <div key={field} className="space-y-2">
-//                           <Label htmlFor={`${field}-${index}`}>
-//                             {field.charAt(0).toUpperCase() + field.slice(1)}
-//                           </Label>
-//                           <Input
-//                             id={`${field}-${index}`}
-//                             value={address[field]}
-//                             onChange={(e) => {
-//                               const updated = [...formData.addresses];
-//                               updated[index][field] = e.target.value;
-//                               setFormData({ ...formData, addresses: updated });
-//                             }}
-//                             placeholder={
-//                               field === "zip" ? "10001" : `Enter ${field}`
-//                             }
-//                           />
-//                         </div>
-//                       ),
-//                     )}
-//                   </div>
-
-//                   {formData.addresses.length > 1 && (
-//                     <div className="flex justify-end">
-//                       <Button
-//                         type="button"
-//                         variant="ghost"
-//                         size="sm"
-//                         className="text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30"
-//                         onClick={() => {
-//                           const updated = formData.addresses.filter(
-//                             (_, i) => i !== index,
-//                           );
-//                           setFormData({ ...formData, addresses: updated });
-//                         }}
-//                       >
-//                         Remove Address
-//                       </Button>
-//                     </div>
-//                   )}
-//                 </div>
-//               ))}
-//               <Button
-//                 type="button"
-//                 variant="outline"
-//                 size="sm"
-//                 className="w-full"
-//                 onClick={() =>
-//                   setFormData({
-//                     ...formData,
-//                     addresses: [
-//                       ...formData.addresses,
-//                       {
-//                         type: "Temporary",
-//                         street: "",
-//                         city: "",
-//                         state: "",
-//                         zip: "",
-//                       },
-//                     ],
-//                   })
-//                 }
-//               >
-//                 + Add Another Address
-//               </Button>
-//             </div>
-
-//             <div className="grid grid-cols-2 gap-4">
-//               <div className="space-y-2">
-//                 <Label>Role</Label>
-//                 <Select
-//                   value={formData.role}
-//                   onValueChange={(val) => handleChange("role", val)}
-//                 >
-//                   <SelectTrigger>
-//                     <SelectValue placeholder="Select a role" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     {[
-//                       "Software Engineer",
-//                       "Marketing Manager",
-//                       "Product Designer",
-//                       "Data Analyst",
-//                       "Sales Representative",
-//                       "Project Manager",
-//                       "Business Analyst",
-//                       "Other",
-//                     ].map((r) => (
-//                       <SelectItem key={r} value={r}>
-//                         {r}
-//                       </SelectItem>
-//                     ))}
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-
-//               <div className="space-y-2">
-//                 <Label>Experience</Label>
-//                 <Select
-//                   value={formData.experience}
-//                   onValueChange={(val) => handleChange("experience", val)}
-//                 >
-//                   <SelectTrigger>
-//                     <SelectValue placeholder="Select experience" />
-//                   </SelectTrigger>
-//                   <SelectContent>
-//                     {[
-//                       "0-1 years",
-//                       "2-3 years",
-//                       "4-5 years",
-//                       "6-8 years",
-//                       "9+ years",
-//                     ].map((exp) => (
-//                       <SelectItem key={exp} value={exp}>
-//                         {exp}
-//                       </SelectItem>
-//                     ))}
-//                   </SelectContent>
-//                 </Select>
-//               </div>
-//             </div>
-
-//             <DocumentUploader
-//               isSubmitting={createPersonaMutation.isPending}
-//               accept={true}
-//               filesRef={documentRef}
-//             />
-
-//             <div className="space-y-2">
-//               <Label>Description</Label>
-//               <Textarea
-//                 rows={3}
-//                 value={formData.personaDescription}
-//                 onChange={(e) =>
-//                   handleChange("personaDescription", e.target.value)
-//                 }
-//                 placeholder="Write background or expertise..."
-//                 className="resize-none"
-//               />
-//             </div>
-
-//             <div className="flex gap-3 pt-4">
-//               <Button
-//                 type="button"
-//                 variant="outline"
-//                 onClick={() => setCreateModalOpen(false)}
-//                 className="flex-1"
-//                 disabled={createPersonaMutation.isPending}
-//               >
-//                 Cancel
-//               </Button>
-//               <Button
-//                 type="submit"
-//                 className="flex-1 "
-//                 disabled={
-//                   createPersonaMutation.isPending ||
-//                   !formData.personaName ||
-//                   !formData.personaEmail ||
-//                   !formData.role
-//                 }
-//               >
-//                 {createPersonaMutation.isPending ? (
-//                   <>
-//                     <Loader className="w-4 h-4 mr-2 animate-spin" />
-//                     Creating...
-//                   </>
-//                 ) : (
-//                   "Create Persona"
-//                 )}
-//               </Button>
-//             </div>
-//           </form>
-//         </DialogContent>
-//       </ScrollArea>
-//     </Dialog>
-//   );
-// }
-
 "use client";
 import React, { useCallback, useMemo, useRef } from "react";
 import {
@@ -438,13 +44,11 @@ const createPersona = async (data: CreatePersonaInput) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-
   if (!res.ok) {
     const txt = await res.text().catch(() => "Unknown error");
     console.error("createPersona failed:", txt);
     throw new Error(txt || "Failed to create persona");
   }
-
   toast.success("Persona created");
   return res.json();
 };
@@ -459,6 +63,7 @@ export default function CreatePersonaModal() {
   const [formData, setFormData] = React.useState<FormData>({
     personaName: "",
     personaEmail: "",
+    personaPhone: "",
     personaDescription: "",
     role: "",
     experience: "",
@@ -527,7 +132,8 @@ export default function CreatePersonaModal() {
       setCreateModalOpen(false);
       resetForm();
     },
-    onError: (err: unknown) => {
+
+    onError: (err: any) => {
       toast.error(err?.message || "Failed to create persona");
     },
   });
@@ -591,12 +197,10 @@ export default function CreatePersonaModal() {
   const handleSubmit = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-
       if (!session?.user?.id) {
         toast.error("You must be logged in to create a persona");
         return;
       }
-
       if (!formData.personaName || !formData.personaEmail || !formData.role) {
         toast.error("Please fill required fields: name, email, role");
         return;
@@ -604,8 +208,8 @@ export default function CreatePersonaModal() {
 
       const payload: CreatePersonaInput = {
         personaName: formData.personaName,
-        email: formData.personaEmail,
-        description: ParseDescription(
+        personaEmail: formData.personaEmail,
+        personaDescription: ParseDescription(
           formData.role,
           formData.experience,
           formData.personaDescription,
@@ -704,28 +308,16 @@ export default function CreatePersonaModal() {
               Fill details to generate a persona for automated form filling.
             </DialogDescription>
           </DialogHeader>
-
           <form onSubmit={handleSubmit} className="space-y-6 pt-2">
             <div className="grid grid-cols-2 gap-4">
-              {/*<div className="space-y-2">
-                <Label htmlFor="personaName">Persona Name</Label>
-                <Input
-                  id="personaName"
-                  type="text"
-                  value={formData.personaName}
-                  onChange={(e) => setField("personaName", e.target.value)}
-                  required
-                  className="placeholdee:text-neutral-100"
-                  placeholder="John Doe"
-                />
-              </div>*/}
               <InputWithLabelElement
                 labelFor="personaName"
                 lableText="Persona Name"
                 inputType="text"
-                inputValue={formData.personaEmail}
+                inputValue={formData.personaName}
                 setField={setField}
-                inputId="personaEmail"
+                inputId="personaName"
+                placeholder="Name"
               />
               <InputWithLabelElement
                 labelFor="personaEmail"
@@ -734,57 +326,20 @@ export default function CreatePersonaModal() {
                 inputValue={formData.personaEmail}
                 setField={setField}
                 inputId="personaEmail"
+                placeholder="email@gmail.com"
               />
-              {/*<div className="space-y-2">
-                <Label htmlFor="personaEmail">Email</Label>
-                <Input
-                  id="personaEmail"
-                  type="email"
-                  value={formData.personaEmail}
-                  onChange={(e) => setField("personaEmail", e.target.value)}
-                  required
-                  placeholder="john@example.com"
-                />
-              </div>*/}
             </div>
-
             <div className="grid grid-cols-4 gap-4">
               <div className="space-y-2 col-span-2">
-                <Label>Role</Label>
-                <Select
-                  value={formData.role}
-                  onValueChange={(v) => setField("role", v)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a role" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {roleOptions.map((r) => (
-                      <SelectItem key={r} value={r}>
-                        {r}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Experience</Label>
-                <Select
-                  value={formData.experience}
-                  onValueChange={(v) => setField("experience", v)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select experience" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {experienceOptions.map((exp) => (
-                      <SelectItem key={exp} value={exp}>
-                        {exp}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <InputWithLabelElement
+                  labelFor="personaPhone"
+                  lableText="Phone Number"
+                  inputId="personaPhone"
+                  setField={setField}
+                  inputValue={formData.personaPhone}
+                  inputType="tel"
+                  placeholder="91+9191919119"
+                />
               </div>
 
               <div className="space-y-2">
@@ -806,6 +361,45 @@ export default function CreatePersonaModal() {
                         </SelectItem>
                       ),
                     )}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-4">
+              <div className="space-y-2 col-span-2">
+                <Label>Role</Label>
+                <Select
+                  value={formData.role}
+                  onValueChange={(v) => setField("role", v)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {roleOptions.map((r) => (
+                      <SelectItem key={r} value={r}>
+                        {r}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2 ">
+                <Label>Experience</Label>
+                <Select
+                  value={formData.experience}
+                  onValueChange={(v) => setField("experience", v)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select experience" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {experienceOptions.map((exp) => (
+                      <SelectItem key={exp} value={exp}>
+                        {exp}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -944,7 +538,6 @@ export default function CreatePersonaModal() {
               ))}
             </div>
 
-            {/* ----- Education (multi) ----- */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>Education</Label>
@@ -1038,7 +631,6 @@ export default function CreatePersonaModal() {
               ))}
             </div>
 
-            {/* ----- Work Experience ----- */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>Work Experience</Label>
@@ -1148,7 +740,6 @@ export default function CreatePersonaModal() {
               ))}
             </div>
 
-            {/* ----- Projects ----- */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label>Projects</Label>

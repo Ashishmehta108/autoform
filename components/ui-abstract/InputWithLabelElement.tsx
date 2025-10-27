@@ -9,6 +9,7 @@ export default function InputWithLabelElement({
   inputType,
   inputValue,
   setField,
+  placeholder,
 }: {
   labelFor: string;
   lableText: string;
@@ -16,6 +17,7 @@ export default function InputWithLabelElement({
   inputType?: string;
   inputValue: string;
   setField: <K extends keyof FormData>(field: K, value: FormData[K]) => void;
+  placeholder: string;
 }) {
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setField(inputId, e.target.value);
@@ -29,7 +31,7 @@ export default function InputWithLabelElement({
         value={inputValue}
         onChange={onInputChange}
         required
-        placeholder="john@example.com"
+        placeholder={placeholder}
       />
     </div>
   );

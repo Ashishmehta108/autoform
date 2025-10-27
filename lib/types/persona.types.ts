@@ -2,12 +2,12 @@ export type CreatePersonaInput = {
   personaName: string;
   userId: string;
   username?: string;
-  personaEmail: string;
   phoneNumber?: string;
   personaImage?: string;
   personaDescription?: string;
   summary?: string;
-  email: string;
+  personaEmail: string;
+
   addresses?: Address[];
   education?: {
     degree: string;
@@ -156,6 +156,7 @@ export interface FormData {
   personaEmail: string;
   personaDescription: string;
   role: string;
+  personaPhone: string;
   experience: string;
   personauserdetaildocs: string;
   addresses: Address[];

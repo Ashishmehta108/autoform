@@ -37,26 +37,27 @@ export const addressSchema = z.object({
 
 export const createPersonaSchema = z.object({
   personaName: z.string().min(1, "Persona name is required"),
+  personaEmail: z
+    .string()
+    .regex(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, {
+      message: "Email is invalid",
+    }),
   userId: z.string().min(1, "User ID is required"),
   username: z.string().optional(),
   phoneNumber: z.string().optional(),
   personaImage: z.string().optional(),
   description: z.string().optional(),
   summary: z.string().optional(),
-
   addresses: z.array(addressSchema).optional(),
-
   education: z.array(educationSchema).optional(),
-
   workExperience: z.array(workExperienceSchema).optional(),
-
   projects: z.array(projectSchema).optional(),
-
   skills: z.array(z.string()).optional(),
   interests: z.array(z.string()).optional(),
   hobbies: z.array(z.string()).optional(),
   languages: z.array(z.string()).optional(),
-
+  personaDescription: z.string(),
+  document: z.string().optional(),
   gender: z.enum(["Male", "Female", "Other", "Prefer not to say"]).optional(),
   nationality: z.string().optional(),
 

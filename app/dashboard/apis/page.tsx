@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Eye, EyeOff, Plus, Copy, Trash2, XCircle } from "lucide-react";
+import { Eye, EyeOff, Plus, Copy, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { Key } from "iconsax-reactjs";
 import { cn } from "@/lib/utils";
@@ -36,7 +36,6 @@ export default function ApiKeysSection() {
     enabled: !!userId,
   });
 
-  // ✅ CREATE KEY — Optimistic
   const createMutation = useMutation({
     mutationFn: async () => {
       const res = await fetch("/api/apikey", {
@@ -61,20 +60,15 @@ export default function ApiKeysSection() {
       };
 
       queryClient.setQueryData(["apikeys", userId], [...prevKeys, tempKey]);
-
       return { prevKeys };
     },
-    onError: (err, _, ctx) => {
+    onError: (_, __, ctx) => {
       toast.error("Failed to create API key");
       if (ctx?.prevKeys)
         queryClient.setQueryData(["apikeys", userId], ctx.prevKeys);
     },
-    onSuccess: () => {
-      toast.success("API key created!");
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(["apikeys", userId]);
-    },
+    onSuccess: () => toast.success("API key created!"),
+    onSettled: () => queryClient.invalidateQueries(["apikeys", userId]),
   });
 
   const deleteMutation = useMutation({
@@ -86,15 +80,13 @@ export default function ApiKeysSection() {
       await queryClient.cancelQueries(["apikeys", userId]);
       const prevKeys =
         queryClient.getQueryData<ApiKey[]>(["apikeys", userId]) || [];
-
       queryClient.setQueryData(
         ["apikeys", userId],
-        (old?: ApiKey[]) => old?.filter((k) => k.id !== id) || []
+        (old?: ApiKey[]) => old?.filter((k) => k.id !== id) || [],
       );
-
       return { prevKeys };
     },
-    onError: (err, _, ctx) => {
+    onError: (_, __, ctx) => {
       toast.error("Failed to delete key");
       if (ctx?.prevKeys)
         queryClient.setQueryData(["apikeys", userId], ctx.prevKeys);
@@ -112,11 +104,13 @@ export default function ApiKeysSection() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <Card className="border border-neutral-200 dark:border-neutral-800 shadow-sm bg-white/60 dark:bg-neutral-900/70 backdrop-blur-sm rounded-2xl">
+      <Card className="border border-neutral-200 dark:border-neutral-800 rounded-2xl transition-all bg-neutral-100 dark:bg-neutral-900">
         <CardHeader className="pb-2">
           <div className="flex items-center gap-2">
             <Key className="w-5 h-5 text-neutral-700 dark:text-neutral-300" />
-            <CardTitle className="text-lg font-semibold">API Key</CardTitle>
+            <CardTitle className="text-lg font-semibold tracking-tight">
+              API Key
+            </CardTitle>
           </div>
           <p className="text-sm text-neutral-500 mt-1">
             Manage your API key — only one active key is allowed.
@@ -135,9 +129,9 @@ export default function ApiKeysSection() {
                 createMutation.mutate();
               }}
               className={cn(
-                "gap-2 transition-all shadow-sm",
+                "gap-2 px-4 py-2 transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_2px_4px_rgba(0,0,0,0.05)] bg-neutral-800 text-white hover:bg-neutral-700 dark:bg-neutral-200 dark:text-neutral-900 dark:hover:bg-neutral-300 cursor-pointer",
                 !canCreate &&
-                  "opacity-60 cursor-not-allowed bg-neutral-200 dark:bg-neutral-800 text-neutral-500"
+                  "opacity-60 cursor-not-allowed bg-neutral-300 dark:bg-neutral-700 dark:text-white text-neutral-900 shadow-none",
               )}
             >
               <Plus className="w-4 h-4" />
@@ -152,11 +146,11 @@ export default function ApiKeysSection() {
               data.map((key) => (
                 <div
                   key={key.id}
-                  className="flex flex-col gap-3 p-4 mb-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/70 shadow-inner hover:shadow-md transition-all duration-200"
+                  className="flex flex-col gap-3 p-4 mb-3 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-800 transition-all duration-300"
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex-1">
-                      <p className="font-mono text-sm text-neutral-800 dark:text-neutral-100 break-all">
+                      <p className="font-mono text-sm text-neutral-800 dark:text-neutral-100 break-all select-text">
                         {showKey ? key.id : key.id.replace(/.(?=.{4})/g, "•")}
                       </p>
                       <p className="text-xs text-neutral-500 mt-1">
@@ -172,7 +166,7 @@ export default function ApiKeysSection() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-neutral-500 cursor-pointer hover:text-neutral-700 dark:hover:text-neutral-300"
+                      className="text-neutral-500 hover:text-neutral-800 dark:hover:text-neutral-300 transition-all cursor-pointer"
                       onClick={() => setShowKey((prev) => !prev)}
                     >
                       {showKey ? (
@@ -186,10 +180,10 @@ export default function ApiKeysSection() {
                   <div className="flex items-center justify-between">
                     <span
                       className={cn(
-                        "px-3 py-1 rounded-full text-xs font-medium",
+                        "px-3 py-1 rounded-full text-xs font-medium shadow-inner select-none",
                         key.revoked
                           ? "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400"
-                          : "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                          : "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
                       )}
                     >
                       {key.revoked ? "Revoked" : "Active"}
@@ -200,7 +194,7 @@ export default function ApiKeysSection() {
                         variant="outline"
                         size="sm"
                         onClick={() => copyToClipboard(key.id)}
-                        className="border-neutral-300 cursor-pointer dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700"
+                        className="border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800/70 hover:bg-neutral-100 dark:hover:bg-neutral-700 shadow-sm cursor-pointer"
                       >
                         <Copy className="mr-1 h-4 w-4" /> Copy
                       </Button>
@@ -208,7 +202,7 @@ export default function ApiKeysSection() {
                         variant="destructive"
                         size="sm"
                         onClick={() => deleteMutation.mutate(key.id)}
-                        className="cursor-pointer"
+                        className="shadow-sm hover:shadow-md cursor-pointer"
                       >
                         <Trash2 className="mr-1 h-4 w-4" /> Delete
                       </Button>
@@ -217,7 +211,7 @@ export default function ApiKeysSection() {
                 </div>
               ))
             ) : (
-              <div className="flex flex-col items-center justify-center py-10 text-center border border-dashed border-neutral-300 dark:border-neutral-700 rounded-xl bg-neutral-50 dark:bg-neutral-900/60">
+              <div className="flex flex-col items-center justify-center py-10 text-center border border-dashed border-neutral-300 dark:border-neutral-700 rounded-xl bg-neutral-50/60 dark:bg-neutral-900/60 shadow-inner select-none">
                 <Key className="h-6 w-6 mb-2 text-neutral-500" />
                 <p className="text-sm text-neutral-500">No API key yet.</p>
               </div>
