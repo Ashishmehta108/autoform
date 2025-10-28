@@ -23,6 +23,7 @@ import { CloudinaryUploader } from "@/components/CloudinaryUploader";
 import { UploadedFile } from "@/lib/types/persona.types";
 import Link from "next/link";
 import { toast } from "sonner";
+import { useSearchParams } from "next/navigation";
 
 const formViaEmailSchema = z.object({
   email: z.string().regex(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, {
@@ -33,6 +34,8 @@ const formViaEmailSchema = z.object({
 });
 
 export default function SignUpForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const { data, status } = useSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const uploadRef = useRef<UploadedFile[]>([]);
@@ -83,7 +86,12 @@ export default function SignUpForm() {
           <Button
             variant="outline"
             className="flex w-1/2 items-center cursor-pointer justify-center gap-2"
-            onClick={() => signIn("github")}
+            onClick={() =>
+              signIn("github", {
+                redirect: true,
+                callbackUrl: callbackUrl,
+              })
+            }
           >
             <Github className="h-5 w-5" />
             GitHub
@@ -93,7 +101,8 @@ export default function SignUpForm() {
             className="flex w-1/2 items-center cursor-pointer justify-center gap-2"
             onClick={() =>
               signIn("google", {
-                redirectTo: "/dashboard",
+                redirect: true,
+                callbackUrl: callbackUrl,
               })
             }
           >

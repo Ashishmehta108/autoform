@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { Google } from "iconsax-reactjs";
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const formViaEmailSchema = z.object({
   email: z.string().regex(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/, {
@@ -31,6 +32,9 @@ const formViaEmailSchema = z.object({
 });
 
 export default function LoginForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+
   const form = useForm<z.infer<typeof formViaEmailSchema>>({
     resolver: zodResolver(formViaEmailSchema),
     defaultValues: {
@@ -71,7 +75,12 @@ export default function LoginForm() {
             <Button
               variant="outline"
               className="flex-1 h-11 gap-2 cursor-pointer"
-              onClick={() => signIn("github")}
+              onClick={() =>
+                signIn("github", {
+                  redirect: true,
+                  callbackUrl: callbackUrl,
+                })
+              }
             >
               <Github className="h-5 w-5" />
               GitHub
@@ -79,7 +88,12 @@ export default function LoginForm() {
             <Button
               variant="outline"
               className="flex-1 h-11 gap-2 cursor-pointer"
-              onClick={() => signIn("google")}
+              onClick={() =>
+                signIn("google", {
+                  redirect: true,
+                  callbackUrl: callbackUrl,
+                })
+              }
             >
               <Google className="fill-neutral-800 dark:text-neutral-100 dark:fill-neutral-100 w-5 h-5 text-neutral-800" />
               Google
